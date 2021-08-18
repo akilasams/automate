@@ -1,6 +1,4 @@
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import AdminDashboardLayout from './pages/admin/AdminDashboardLayout';
-import HomeLayout from './pages/user/HomeLayout';
 import Layout from './shared/components/UIElements/Layout';
 import Home from './pages/user//Home';
 import About from './pages/user/About';
@@ -30,41 +28,38 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Switch>
-          <HomeLayout>
+          <Layout>
             <Route exact path='/'>
               <Home />
             </Route>
-            <Route exact path='/About'>
+            <Route path='/About'>
               <About />
             </Route>
-            <Route exact path='/ContactUs'>
+            <Route path='/ContactUs'>
               <ContactUs />
             </Route>
-            <Route exact path='/Blog'>
+            <Route path='/Blog'>
               <Blog />
             </Route>
-            <Route exact path='/Shop'>
+            <Route path='/Shop'>
               <Shop />
             </Route>
-          </HomeLayout>
-
-          <AdminDashboardLayout>
-            <Route exact path='/Dashboard'>
+            <Route exact path='/Admin'>
               <Dashboard />
             </Route>
-            <Route exact path='/Customers'>
+            <Route path='/Admin/Customers'>
               <Customers />
             </Route>
-            <Route exact path='/Advertisements'>
+            <Route path='/Admin/Advertisements'>
               <Advertisements />
             </Route>
-            <Route exact path='/Registrations'>
+            <Route path='/Admin/Registrations'>
               <Registrations />
             </Route>
-            <Route exact path='/AddBlog'>
+            <Route path='/Admin/AddBlog'>
               <AddBlog />
             </Route>
-          </AdminDashboardLayout>
+          </Layout>
         </Switch>
       </Router>
     </ThemeProvider>

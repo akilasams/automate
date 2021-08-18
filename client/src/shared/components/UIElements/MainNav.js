@@ -11,17 +11,9 @@ import { NavLink, useHistory, useLocation } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => {
   return {
-    root: {
-      display: 'flex',
-    },
-    page: {
-      width: '100%',
-      padding: theme.spacing(3),
-    },
     appbar: {
       backgroundColor: '#fff',
     },
-    toolbar: theme.mixins.toolbar,
     navlinks: {
       display: 'flex',
       flexFlow: 'row',
@@ -64,7 +56,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function HomeLayout({ children }) {
+const MainNav = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
@@ -88,54 +80,49 @@ export default function HomeLayout({ children }) {
     },
   ];
 
-  return (
-    <div className={classes.root}>
-      <AppBar className={classes.appbar}>
-        <Toolbar>
-          <Button onClick={() => history.push('/')}>
-            <Typography className={classes.title}>AUTOMATE</Typography>
-          </Button>
-          <div className={classes.space}></div>
-          <List className={classes.list}>
-            {menuItems.map((listItem) => (
-              <NavLink
-                to={listItem.path}
-                className={classes.navlink}
-                activeClassName={classes.active}
-                key={listItem.text}
-              >
-                <ListItem
-                  className={classes.listitem}
-                  // onClick={() => history.push(listItem.path)}
-                >
-                  <ListItemText primary={listItem.text} />
-                </ListItem>
-              </NavLink>
-            ))}
-          </List>
-          <div>
-            <Button
-              className={classes.button}
-              color='primary'
-              variant='contained'
-            >
-              LOGIN
-            </Button>
-            <Button
-              className={classes.button}
-              color='primary'
-              variant='outlined'
-            >
-              SIGN UP
-            </Button>
-          </div>
-        </Toolbar>
-      </AppBar>
+  if (location.pathname.match('/Admin')) {
+    return null;
+  }
 
-      <div className={classes.page}>
-        <div className={classes.toolbar}></div>
-        {children}
-      </div>
-    </div>
+  return (
+    <AppBar className={classes.appbar}>
+      <Toolbar>
+        <Button onClick={() => history.push('/')}>
+          <Typography className={classes.title}>AUTOMATE</Typography>
+        </Button>
+        <div className={classes.space}></div>
+        <List className={classes.list}>
+          {menuItems.map((listItem) => (
+            <NavLink
+              to={listItem.path}
+              className={classes.navlink}
+              activeClassName={classes.active}
+              key={listItem.text}
+            >
+              <ListItem
+                className={classes.listitem}
+                // onClick={() => history.push(listItem.path)}
+              >
+                <ListItemText primary={listItem.text} />
+              </ListItem>
+            </NavLink>
+          ))}
+        </List>
+        <div>
+          <Button
+            className={classes.button}
+            color='primary'
+            variant='contained'
+          >
+            LOGIN
+          </Button>
+          <Button className={classes.button} color='primary' variant='outlined'>
+            SIGN UP
+          </Button>
+        </div>
+      </Toolbar>
+    </AppBar>
   );
-}
+};
+
+export default MainNav;

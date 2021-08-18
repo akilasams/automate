@@ -1,9 +1,11 @@
 import React from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core';
+import ReactDOM from 'react-dom';
+
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
-import '@fontsource/roboto';
+
+import { PostAdd, People, Storefront, Book } from '@material-ui/icons';
 import { List } from '@material-ui/core';
 import { ListItem } from '@material-ui/core';
 import { ListItemIcon } from '@material-ui/core';
@@ -12,20 +14,12 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import { AppBar } from '@material-ui/core';
 import { Toolbar } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
-
-import { PostAdd, People, Storefront, Book } from '@material-ui/icons';
+import { makeStyles } from '@material-ui/core';
 
 const drawerWidth = 220;
 
 const useStyles = makeStyles((theme) => {
   return {
-    root: {
-      display: 'flex',
-    },
-    page: {
-      width: '100%',
-      padding: theme.spacing(3),
-    },
     drawer: {
       width: drawerWidth,
     },
@@ -44,7 +38,6 @@ const useStyles = makeStyles((theme) => {
     appbar: {
       width: `calc(100% - ${drawerWidth}px)`,
     },
-    toolbar: theme.mixins.toolbar, //All classes associated with Toolbar
     welcome: {
       flexGrow: 1, //Itll take up all the space horizontally available to it
     },
@@ -54,7 +47,7 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export default function AdminDashboardLayout({ children }) {
+const AdminLeftNav = (props) => {
   const classes = useStyles();
   const history = useHistory(); //To link ListItems
   const location = useLocation(); //To Track Current Page
@@ -63,32 +56,32 @@ export default function AdminDashboardLayout({ children }) {
     {
       text: 'Dashboard',
       icon: <DashboardIcon />,
-      path: '/Dashboard',
+      path: '/Admin',
     },
     {
       text: 'Customers',
       icon: <People />,
-      path: '/Customers',
+      path: '/Admin/Customers',
     },
     {
       text: 'Advertisements',
       icon: <PostAdd />,
-      path: '/Advertisements',
+      path: '/Admin/Advertisements',
     },
     {
       text: 'Registrations',
       icon: <Storefront />,
-      path: '/Registrations',
+      path: '/Admin/Registrations',
     },
     {
       text: 'Add Blog',
       icon: <Book />,
-      path: '/AddBlog',
+      path: '/Admin/AddBlog',
     },
   ];
 
   return (
-    <div className={classes.root}>
+    <React.Fragment>
       <AppBar className={classes.appbar} elevation={0}>
         <Toolbar>
           <Typography className={classes.welcome}>
@@ -129,11 +122,13 @@ export default function AdminDashboardLayout({ children }) {
           ))}
         </List>
       </Drawer>
-
-      <div className={classes.page}>
-        <div className={classes.toolbar}></div>
-        {children}
-      </div>
-    </div>
+    </React.Fragment>
   );
-}
+
+  // return ReactDOM.createPortal(
+  //   content,
+  //   document.getElementById('leftNav-hook')
+  // );
+};
+
+export default AdminLeftNav;
