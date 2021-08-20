@@ -7,7 +7,8 @@ import { List } from '@material-ui/core';
 import { ListItem } from '@material-ui/core';
 import { ListItemText } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-import { NavLink, useHistory, useLocation } from 'react-router-dom';
+import { NavLink, Link, useHistory, useLocation } from 'react-router-dom';
+import BeforeSignUp from '../../../pages/user/components/BeforeSignUp';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -114,10 +115,14 @@ const MainNav = (props) => {
             color='primary'
             variant='contained'
           >
-            LOGIN
+            <Link to='/Login' style={{ textDecoration: 'none', color: '#fff' }}>
+              LOGIN
+            </Link>
           </Button>
           <Button className={classes.button} color='primary' variant='outlined'>
-            SIGN UP
+            <Link to='/BeforeSignUp' style={{ textDecoration: 'none' }}>
+              SIGN UP
+            </Link>
           </Button>
         </div>
       </Toolbar>

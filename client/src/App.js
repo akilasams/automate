@@ -11,6 +11,7 @@ import Advertisements from './pages/admin/Advertisements';
 import Registrations from './pages/admin/Registrations';
 import AddBlog from './pages/admin/AddBlog';
 import { createTheme, ThemeProvider } from '@material-ui/core';
+import AuthForm from './pages/user/AuthForm';
 
 const theme = createTheme({
   palette: {
@@ -43,6 +44,15 @@ function App() {
             </Route>
             <Route path='/Shop'>
               <Shop />
+            </Route>
+            <Route path='/Login'>
+              <AuthForm />
+            </Route>
+            <Route path='/SignUp'>
+              <AuthForm />
+            </Route>
+            <Route path='/BeforeSignUp'>
+              <AuthForm />
             </Route>
             <Route exact path='/Admin'>
               <Dashboard />
