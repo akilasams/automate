@@ -14,26 +14,37 @@ function BeforeSignUp() {
         variant='contained'
         style={{ width: '60%', margin: '5px' }}
       >
-        <Link to='/SignUp' style={{ textDecoration: 'none', color: '#fff' }}>
+        <Link
+          to='/SignUpIndi'
+          style={{ textDecoration: 'none', color: '#fff' }}
+        >
+          I'M A CUSTOMER
+        </Link>
+      </Button>
+      <Button
+        color='primary'
+        variant='contained'
+        style={{ width: '60%', margin: '5px' }}
+      >
+        <Link
+          to='/SignUpIndi'
+          style={{ textDecoration: 'none', color: '#fff' }}
+        >
           I'M AN INDIVIDUAL SELLER
         </Link>
       </Button>
-      <Button color='primary' variant='contained' style={{ width: '60%' }}>
-        <Link to='/SignUp' style={{ textDecoration: 'none', color: '#fff' }}>
+      <Button
+        color='primary'
+        variant='contained'
+        style={{ width: '60%', marginTop: '5px', marginBottom: '10px' }}
+      >
+        <Link
+          to='/SignUpShop'
+          style={{ textDecoration: 'none', color: '#fff' }}
+        >
           I OWN A SHOP
         </Link>
       </Button>
-      <label
-        style={{ textDecoration: 'none', color: '#737373', fontSize: '10px' }}
-      >
-        Already Have an Account?
-      </label>
-      <Link
-        to='/Login'
-        style={{ textDecoration: 'none', color: 'primary', fontSize: '10px' }}
-      >
-        Login
-      </Link>
     </form>
   );
 }

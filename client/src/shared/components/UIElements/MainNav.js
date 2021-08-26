@@ -8,7 +8,8 @@ import { ListItem } from '@material-ui/core';
 import { ListItemText } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { NavLink, Link, useHistory, useLocation } from 'react-router-dom';
-import BeforeSignUp from '../../../pages/user/components/BeforeSignUp';
+import { Avatar } from '@material-ui/core';
+// import BeforeSignUp from '../../../pages/user/components/BeforeSignUp';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -53,6 +54,14 @@ const useStyles = makeStyles((theme) => {
     },
     space: {
       flexGrow: 1,
+    },
+    signedIn: {
+      display: 'flex',
+      alignItems: 'center',
+      color: theme.palette.primary.main,
+    },
+    avatar: {
+      marginLeft: theme.spacing(2),
     },
   };
 });
@@ -125,6 +134,10 @@ const MainNav = (props) => {
             </Link>
           </Button>
         </div>
+        {/* <div className={classes.signedIn}>
+          <Typography style={{ fontWeight: 'bold' }}>Name</Typography>
+          <Avatar src='/images/guy.jpg' className={classes.avatar} />
+        </div> */}
       </Toolbar>
     </AppBar>
   );

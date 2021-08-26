@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
-import * as yup from 'yup';
+import { userLoginSchema } from '../../../validations/UserValidation';
 
 const useStyle = makeStyles({
   field: {
@@ -12,28 +12,21 @@ const useStyle = makeStyles({
   },
 });
 
-const validationSchema = yup.object({
-  email: yup
-    .string('Enter your email')
-    .email('Enter a valid email')
-    .required('Email is required'),
-  password: yup
-    .string('Enter your password')
-    .min(8, 'Password should be of minimum 8 characters length')
-    .required('Password is required'),
-});
+const initialValues = {
+  email: '',
+  password: '',
+};
+
+const onSubmit = (values) => {
+  alert(JSON.stringify(values, null, 2));
+};
 
 function LoginForm() {
   const classes = useStyle();
   const formik = useFormik({
-    initialValues: {
-      email: 'foobar@example.com',
-      password: 'foobar',
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
+    initialValues,
+    userLoginSchema,
+    onSubmit,
   });
 
   return (
@@ -42,19 +35,14 @@ function LoginForm() {
         <img src='./images/logo.png' alt='Automate' />
       </div>
       <p>Welcome to Automate!</p>
-      {/* <Field id='auth-input' name='email' placeholder='Email' />
-          <Field id='auth-input' name='password' placeholder='Password' />
-          <Button color='primary' variant='contained'>
-            Login
-          </Button> */}
       <TextField
         className={classes.field}
         id='auth-input'
         label='Email'
         name='email'
         variant='filled'
-        value={formik.values.email}
         onChange={formik.handleChange}
+        value={formik.values.email}
         error={formik.touched.email && Boolean(formik.errors.email)}
         helperText={formik.touched.email && formik.errors.email}
       />
@@ -65,8 +53,8 @@ function LoginForm() {
         name='password'
         type='password'
         variant='filled'
-        value={formik.values.password}
         onChange={formik.handleChange}
+        value={formik.values.password}
         error={formik.touched.password && Boolean(formik.errors.password)}
         helperText={formik.touched.password && formik.errors.password}
       />

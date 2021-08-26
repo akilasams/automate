@@ -30,45 +30,20 @@ function App() {
       <Router>
         <Switch>
           <Layout>
-            <Route exact path='/'>
-              <Home />
-            </Route>
-            <Route path='/About'>
-              <About />
-            </Route>
-            <Route path='/ContactUs'>
-              <ContactUs />
-            </Route>
-            <Route path='/Blog'>
-              <Blog />
-            </Route>
-            <Route path='/Shop'>
-              <Shop />
-            </Route>
-            <Route path='/Login'>
-              <AuthForm />
-            </Route>
-            <Route path='/SignUp'>
-              <AuthForm />
-            </Route>
-            <Route path='/BeforeSignUp'>
-              <AuthForm />
-            </Route>
-            <Route exact path='/Admin'>
-              <Dashboard />
-            </Route>
-            <Route path='/Admin/Customers'>
-              <Customers />
-            </Route>
-            <Route path='/Admin/Advertisements'>
-              <Advertisements />
-            </Route>
-            <Route path='/Admin/Registrations'>
-              <Registrations />
-            </Route>
-            <Route path='/Admin/AddBlog'>
-              <AddBlog />
-            </Route>
+            <Route exact path='/' component={Home} />
+            <Route path='/About' component={About} />
+            <Route path='/ContactUs' component={ContactUs} />
+            <Route path='/Blog' component={Blog} />
+            <Route path='/Shop' component={Shop} />
+            <Route path='/Login' component={AuthForm} />
+            <Route path='/SignUpShop' component={AuthForm} />
+            <Route path='/SignUpIndi' component={AuthForm} />
+            <Route path='/BeforeSignUp' component={AuthForm} />
+            <Route exact path='/Admin' component={Dashboard} />
+            <Route path='/Admin/Customers' component={Customers} />
+            <Route path='/Admin/Advertisements' component={Advertisements} />
+            <Route path='/Admin/Registrations' component={Registrations} />
+            <Route path='/Admin/AddBlog' component={AddBlog} />
           </Layout>
         </Switch>
       </Router>

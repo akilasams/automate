@@ -1,7 +1,8 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
-import SignUpForm from './components/SignUpForm';
+import SignUpFormShop from './components/SignUpFormShop';
+import SignUpFormIndi from './components/SignUpFormIndi';
 import BeforeSignUp from './components/BeforeSignUp';
 import { makeStyles } from '@material-ui/core';
 
@@ -19,7 +20,8 @@ function AuthForm() {
   const location = useLocation(); //To Track Current Page
   let login = location.pathname.match('/Login');
   let beforeSignUp = location.pathname.match('/BeforeSignUp');
-  let signUp = location.pathname.match('/SignUp');
+  let signUpShop = location.pathname.match('/SignUpShop');
+  let signUpIndi = location.pathname.match('/SignUpIndi');
 
   return (
     <div className={classes.root}>
@@ -27,7 +29,8 @@ function AuthForm() {
         <img src='./images/Vehicle-Repair.jpg' alt='What We Do' />
       </div>
       {login && <LoginForm />}
-      {signUp && <SignUpForm />}
+      {signUpShop && <SignUpFormShop />}
+      {signUpIndi && <SignUpFormIndi />}
       {beforeSignUp && <BeforeSignUp />}
     </div>
   );
