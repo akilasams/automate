@@ -1,18 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
-  const Order = sequelize.define('Order', {
+  const Orders = sequelize.define('Orders', {
     amount: {
       type: DataTypes.DOUBLE(8, 2),
       allowNull: false,
     },
   });
 
-  Order.associate = (models) => {
-    Order.hasMany(models.OrderItem, {
+  Orders.associate = (models) => {
+    Orders.hasMany(models.OrderItems, {
       onDelete: 'cascade',
     });
 
-    Order.hasOne(models.Payment);
+    Orders.hasOne(models.Payments);
   };
 
-  return Order;
+  return Orders;
 };

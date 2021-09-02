@@ -1,6 +1,10 @@
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    fullName: {
+  const Users = sequelize.define('Users', {
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    lastName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -26,23 +30,27 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  User.associate = (models) => {
-    User.hasMany(models.Order, {
+  Users.associate = (models) => {
+    Users.hasMany(models.Orders, {
+      foreginKey: 'userId',
       onDelete: 'cascade',
     });
 
-    User.hasMany(models.Blog, {
+    Users.hasMany(models.Blogs, {
+      foreginKey: 'userId',
       onDelete: 'cascade',
     });
 
-    User.hasMany(models.Complaint, {
+    Users.hasMany(models.Complaints, {
+      foreginKey: 'userId',
       onDelete: 'cascade',
     });
 
-    User.hasMany(models.ShopItem, {
+    Users.hasMany(models.ShopItems, {
+      foreginKey: 'userId',
       onDelete: 'cascade',
     });
   };
 
-  return User;
+  return Users;
 };

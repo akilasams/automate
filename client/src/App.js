@@ -12,6 +12,9 @@ import Registrations from './pages/admin/Registrations';
 import AddBlog from './pages/admin/AddBlog';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import AuthForm from './pages/user/AuthForm';
+import { AuthContext } from './helpers/AuthContext';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const theme = createTheme({
   palette: {
@@ -25,28 +28,48 @@ const theme = createTheme({
 });
 
 function App() {
+  const [authState, setAuthState] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/user/auth', {
+        headers: {
+          accessToken: localStorage.getItem('accessToken'),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState(false);
+        } else {
+          setAuthState(true);
+        }
+      });
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
-      <Router>
-        <Switch>
-          <Layout>
-            <Route exact path='/' component={Home} />
-            <Route path='/About' component={About} />
-            <Route path='/ContactUs' component={ContactUs} />
-            <Route path='/Blog' component={Blog} />
-            <Route path='/Shop' component={Shop} />
-            <Route path='/Login' component={AuthForm} />
-            <Route path='/SignUpShop' component={AuthForm} />
-            <Route path='/SignUpIndi' component={AuthForm} />
-            <Route path='/BeforeSignUp' component={AuthForm} />
-            <Route exact path='/Admin' component={Dashboard} />
-            <Route path='/Admin/Customers' component={Customers} />
-            <Route path='/Admin/Advertisements' component={Advertisements} />
-            <Route path='/Admin/Registrations' component={Registrations} />
-            <Route path='/Admin/AddBlog' component={AddBlog} />
-          </Layout>
-        </Switch>
-      </Router>
+      <AuthContext.Provider value={{ authState, setAuthState }}>
+        <Router>
+          <Switch>
+            <Layout>
+              <Route exact path='/' component={Home} />
+              <Route path='/About' component={About} />
+              <Route path='/ContactUs' component={ContactUs} />
+              <Route path='/Blog' component={Blog} />
+              <Route path='/Shop' component={Shop} />
+              <Route path='/Login' component={AuthForm} />
+              <Route path='/SignUpShop' component={AuthForm} />
+              <Route path='/SignUpIndi' component={AuthForm} />
+              <Route path='/BeforeSignUp' component={AuthForm} />
+              <Route exact path='/Admin' component={Dashboard} />
+              <Route path='/Admin/Customers' component={Customers} />
+              <Route path='/Admin/Advertisements' component={Advertisements} />
+              <Route path='/Admin/Registrations' component={Registrations} />
+              <Route path='/Admin/AddBlog' component={AddBlog} />
+            </Layout>
+          </Switch>
+        </Router>
+      </AuthContext.Provider>
     </ThemeProvider>
   );
 }

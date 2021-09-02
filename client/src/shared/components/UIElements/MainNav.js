@@ -8,7 +8,15 @@ import { ListItem } from '@material-ui/core';
 import { ListItemText } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { NavLink, Link, useHistory, useLocation } from 'react-router-dom';
-import { Avatar } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+import { useState } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../../helpers/AuthContext';
+// import axios from 'axios';
+// import { useEffect } from 'react';
 // import BeforeSignUp from '../../../pages/user/components/BeforeSignUp';
 
 const useStyles = makeStyles((theme) => {
@@ -19,12 +27,19 @@ const useStyles = makeStyles((theme) => {
     navlinks: {
       display: 'flex',
       flexFlow: 'row',
+      alignItems: 'center',
     },
     button: {
       marginLeft: 5,
       marginRight: 5,
       height: '40px',
       width: '100px',
+    },
+    postAdButton: {
+      marginLeft: 5,
+      marginRight: '15px',
+      height: '40px',
+      width: '120px',
     },
     list: {
       display: 'flex',
@@ -66,10 +81,45 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const MainNav = (props) => {
+const MainNav = () => {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
+
+  // const [authState, setAuthState] = useState(false);
+  const { authState, setAuthState } = useContext(AuthContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:3001/user/auth', {
+  //       headers: {
+  //         accessToken: localStorage.getItem('accessToken'),
+  //       },
+  //     })
+  //     .then((response) => {
+  //       if (response.data.error) {
+  //         setAuthState(false);
+  //       } else {
+  //         setAuthState(true);
+  //       }
+  //     });
+  // });
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logout = () => {
+    setAnchorEl(null);
+    localStorage.removeItem('accessToken');
+    setAuthState(false);
+  };
 
   const menuItems = [
     {
@@ -118,26 +168,77 @@ const MainNav = (props) => {
             </NavLink>
           ))}
         </List>
-        <div>
-          <Button
-            className={classes.button}
-            color='primary'
-            variant='contained'
-          >
-            <Link to='/Login' style={{ textDecoration: 'none', color: '#fff' }}>
-              LOGIN
-            </Link>
-          </Button>
-          <Button className={classes.button} color='primary' variant='outlined'>
-            <Link to='/BeforeSignUp' style={{ textDecoration: 'none' }}>
-              SIGN UP
-            </Link>
-          </Button>
-        </div>
-        {/* <div className={classes.signedIn}>
-          <Typography style={{ fontWeight: 'bold' }}>Name</Typography>
-          <Avatar src='/images/guy.jpg' className={classes.avatar} />
-        </div> */}
+        {!authState ? (
+          <div>
+            <Button
+              className={classes.button}
+              color='primary'
+              variant='contained'
+            >
+              <Link
+                to='/Login'
+                style={{ textDecoration: 'none', color: '#fff' }}
+              >
+                LOGIN
+              </Link>
+            </Button>
+            <Button
+              className={classes.button}
+              color='primary'
+              variant='outlined'
+            >
+              <Link to='/BeforeSignUp' style={{ textDecoration: 'none' }}>
+                SIGN UP
+              </Link>
+            </Button>
+          </div>
+        ) : (
+          <div className={classes.navlinks}>
+            <Button
+              className={classes.postAdButton}
+              color='primary'
+              variant='contained'
+            >
+              <Link to='' style={{ textDecoration: 'none', color: '#fff' }}>
+                Post an Ad
+              </Link>
+            </Button>
+            <Typography
+              color='primary'
+              style={{ marginRight: '8px', fontWeight: 'bold' }}
+            >
+              NAME
+            </Typography>
+            <IconButton
+              aria-label='account of current user'
+              aria-controls='menu-appbar'
+              aria-haspopup='true'
+              onClick={handleMenu}
+              color='inherit'
+            >
+              <AccountCircle color='primary' />
+            </IconButton>
+            <Menu
+              id='menu-appbar'
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={open}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={handleClose}>My Profile</MenuItem>
+              <MenuItem onClick={handleClose}>Settings</MenuItem>
+              <MenuItem onClick={logout}>Sign Out</MenuItem>
+            </Menu>
+          </div>
+        )}
       </Toolbar>
     </AppBar>
   );
