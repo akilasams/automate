@@ -4,6 +4,10 @@ import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { userLoginSchema } from '../../../validations/UserValidation';
+import axios from 'axios';
+import { useHistory } from 'react-router';
+import { useState, useContext } from 'react';
+import { AuthContext } from '../../../helpers/AuthContext';
 
 const useStyle = makeStyles({
   field: {
@@ -17,12 +21,26 @@ const initialValues = {
   password: '',
 };
 
-const onSubmit = (values) => {
-  alert(JSON.stringify(values, null, 2));
-};
-
 function LoginForm() {
   const classes = useStyle();
+
+  const { setAuthState } = useContext(AuthContext);
+
+  let history = useHistory();
+
+  const onSubmit = (data) => {
+    axios.post('http://localhost:3001/user/login', data).then((response) => {
+      // console.log(data);
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        localStorage.setItem('accessToken', response.data);
+        setAuthState(true);
+        history.push('/');
+      }
+    });
+  };
+
   const formik = useFormik({
     initialValues,
     userLoginSchema,

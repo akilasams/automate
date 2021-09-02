@@ -3,10 +3,24 @@ import { useFormik } from 'formik';
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
+import { MenuItem } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { shopRegisterSchema } from '../../../validations/UserValidation';
+import axios from 'axios';
+// import { Hidden } from '@material-ui/core';
 
 // import FileUpload from '../../../shared/components/FormElements/FileUpload';
+
+const serviceTypes = [
+  {
+    value: 'Spare Part Seller',
+    label: 'Spare Part Seller',
+  },
+  {
+    value: 'Service Center',
+    label: 'Service Center',
+  },
+];
 
 const useStyle = makeStyles({
   field: {
@@ -16,27 +30,36 @@ const useStyle = makeStyles({
 });
 
 const initialValues = {
-  fullName: '',
+  firstName: '',
+  lastName: '',
   shopName: '',
   mobileNumber: '',
-  shopAddress: '',
   address: '',
+  serviceType: 'Spare Part Seller',
   email: '',
   password: '',
   confirmPassword: '',
 };
 
-const onSubmit = (values) => {
-  alert(JSON.stringify(values, null, 2));
+const onSubmit = (data) => {
+  axios.post('http://localhost:3001/user/regShop', data).then(() => {
+    console.log(data);
+  });
 };
 
-function SignUpFormShop() {
+function SignUpFormShop(props) {
   const classes = useStyle();
   const formik = useFormik({
     initialValues,
     shopRegisterSchema,
     onSubmit,
   });
+
+  const [serviceType, setServiceType] = React.useState('Spare Part Seller');
+
+  const handleServiceTypeChange = (event) => {
+    setServiceType(event.target.value);
+  };
 
   return (
     <form className='form-container' onSubmit={formik.handleSubmit}>
@@ -47,17 +70,27 @@ function SignUpFormShop() {
           </Button> */}
       <TextField
         className={classes.field}
-        id='auth-input'
-        label='Full Name'
-        name='fullName'
+        id='firstName'
+        label='First Name'
+        name='firstName'
         variant='filled'
         onChange={formik.handleChange}
-        error={formik.touched.fullName && Boolean(formik.errors.fullName)}
-        helperText={formik.touched.fullName && formik.errors.fullName}
+        error={formik.touched.firtName && Boolean(formik.errors.firtName)}
+        helperText={formik.touched.firtName && formik.errors.firtName}
       />
       <TextField
         className={classes.field}
-        id='auth-input'
+        id='lastName'
+        label='Last Name'
+        name='lastName'
+        variant='filled'
+        onChange={formik.handleChange}
+        error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+        helperText={formik.touched.lastName && formik.errors.lastName}
+      />
+      <TextField
+        className={classes.field}
+        id='shopName'
         label='Shop Name'
         name='shopName'
         variant='filled'
@@ -67,7 +100,7 @@ function SignUpFormShop() {
       />
       <TextField
         className={classes.field}
-        id='auth-input'
+        id='mobileNumber'
         label='Mobile Number'
         name='mobileNumber'
         variant='filled'
@@ -77,11 +110,25 @@ function SignUpFormShop() {
         }
         helperText={formik.touched.mobileNumber && formik.errors.mobileNumber}
       />
+
+      {/* <Hidden xsUp>
+        <TextField
+          className={classes.field}
+          id='userRole'
+          name='userRole'
+          value={userRole}
+          variant='filled'
+          onChange={formik.handleChange}
+        />
+      </Hidden> */}
+
+      {/* <input type='hidden' id='userRole' name='userRole' value={userRole} /> */}
+
       <TextField
         className={classes.field}
-        id='auth-input'
+        id='address'
         label='Shop Address'
-        name='shopAddress'
+        name='address'
         variant='filled'
         onChange={formik.handleChange}
         error={formik.touched.shopAddress && Boolean(formik.errors.shopAddress)}
@@ -89,7 +136,25 @@ function SignUpFormShop() {
       />
       <TextField
         className={classes.field}
-        id='auth-input'
+        id='serviceType'
+        name='serviceType'
+        select
+        // initialValues={formik.initialValues}
+        label='Service Type'
+        value={formik.values.serviceType}
+        onChange={handleServiceTypeChange}
+        helperText={formik.touched.shopAddress && formik.errors.shopAddress}
+        variant='filled'
+      >
+        {serviceTypes.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
+      <TextField
+        className={classes.field}
+        id='email'
         label='Email'
         name='email'
         variant='filled'
@@ -99,7 +164,7 @@ function SignUpFormShop() {
       />
       <TextField
         className={classes.field}
-        id='auth-input'
+        id='password'
         label='Password'
         name='password'
         type='password'
@@ -110,7 +175,7 @@ function SignUpFormShop() {
       />
       <TextField
         className={classes.field}
-        id='auth-input'
+        id='confirmPassword'
         label='Confirm Password'
         name='confirmPassword'
         type='password'

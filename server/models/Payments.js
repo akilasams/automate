@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Payment = sequelize.define('Payment', {
+  const Payments = sequelize.define('Payments', {
     customerId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -10,5 +10,5 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  return Payment;
+  return Payments;
 };

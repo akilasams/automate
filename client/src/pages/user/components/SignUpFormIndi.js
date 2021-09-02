@@ -1,10 +1,13 @@
 import React from 'react';
+import { useHistory } from 'react-router';
 import { useFormik } from 'formik';
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { userRegisterSchema } from '../../../validations/UserValidation';
+import axios from 'axios';
+// import { Hidden } from '@material-ui/core';
 
 // import FileUpload from '../../../shared/components/FormElements/FileUpload';
 
@@ -16,7 +19,8 @@ const useStyle = makeStyles({
 });
 
 const initialValues = {
-  fullName: '',
+  firstName: '',
+  lastName: '',
   mobileNumber: '',
   address: '',
   email: '',
@@ -24,17 +28,23 @@ const initialValues = {
   confirmPassword: '',
 };
 
-const onSubmit = (values) => {
-  alert(JSON.stringify(values, null, 2));
+const onSubmit = (data) => {
+  axios.post('http://localhost:3001/user/regCustomer', data).then(() => {
+    console.log(data);
+  });
 };
 
-function SignUpFormIndi() {
+function SignUpFormIndi(props) {
   const classes = useStyle();
   const formik = useFormik({
     initialValues,
     userRegisterSchema,
     onSubmit,
   });
+
+  const { userRole } = props;
+  // const history = useHistory();
+  // const prevPath = history.goBack();
 
   return (
     <form className='form-container' onSubmit={formik.handleSubmit}>
@@ -45,17 +55,27 @@ function SignUpFormIndi() {
           </Button> */}
       <TextField
         className={classes.field}
-        id='auth-input'
-        label='Full Name'
-        name='fullName'
+        id='firstName'
+        label='First Name'
+        name='firstName'
         variant='filled'
         onChange={formik.handleChange}
-        error={formik.touched.fullName && Boolean(formik.errors.fullName)}
-        helperText={formik.touched.fullName && formik.errors.fullName}
+        error={formik.touched.firtName && Boolean(formik.errors.firtName)}
+        helperText={formik.touched.firtName && formik.errors.firtName}
       />
       <TextField
         className={classes.field}
-        id='auth-input'
+        id='lastName'
+        label='Last Name'
+        name='lastName'
+        variant='filled'
+        onChange={formik.handleChange}
+        error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+        helperText={formik.touched.lastName && formik.errors.lastName}
+      />
+      <TextField
+        className={classes.field}
+        id='mobileNumber'
         label='Mobile Number'
         name='mobileNumber'
         variant='filled'
@@ -65,9 +85,22 @@ function SignUpFormIndi() {
         }
         helperText={formik.touched.mobileNumber && formik.errors.mobileNumber}
       />
+
+      {/* <Hidden xsUp>
+        <TextField
+          className={classes.field}
+          id='userRole'
+          name='userRole'
+          value={userRole}
+          variant='filled'
+        />
+      </Hidden> */}
+
+      {/* <input type='hidden' id='userRole' name='userRole' value={userRole} /> */}
+
       <TextField
         className={classes.field}
-        id='auth-input'
+        id='address'
         label='Address'
         name='address'
         variant='filled'
@@ -77,7 +110,7 @@ function SignUpFormIndi() {
       />
       <TextField
         className={classes.field}
-        id='auth-input'
+        id='email'
         label='Email'
         name='email'
         variant='filled'
@@ -87,7 +120,7 @@ function SignUpFormIndi() {
       />
       <TextField
         className={classes.field}
-        id='auth-input'
+        id='password'
         label='Password'
         name='password'
         type='password'
@@ -98,7 +131,7 @@ function SignUpFormIndi() {
       />
       <TextField
         className={classes.field}
-        id='auth-input'
+        id='confirmPassword'
         label='Confirm Password'
         name='confirmPassword'
         type='password'

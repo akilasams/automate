@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Complaint = sequelize.define('Complaint', {
+  const Complaints = sequelize.define('Complaints', {
     senderId: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -13,5 +13,5 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
   });
-  return Complaint;
+  return Complaints;
 };

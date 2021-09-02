@@ -19,7 +19,7 @@ export const userRegisterSchema = yup.object().shape({
     .string('Enter your mobile number')
     // .phone('LK', true)
     .required('Mobile numer is required'),
-  Address: yup.string('Enter your address').required('Address is rerquired'),
+  address: yup.string('Enter your address').required('Address is rerquired'),
   email: yup
     .string('Enter your email')
     .email('Enter a valid email')
