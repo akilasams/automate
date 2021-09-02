@@ -24,7 +24,7 @@ const initialValues = {
 function LoginForm() {
   const classes = useStyle();
 
-  const { setAuthState } = useContext(AuthContext);
+  const { setAuthState, setUser } = useContext(AuthContext);
 
   let history = useHistory();
 

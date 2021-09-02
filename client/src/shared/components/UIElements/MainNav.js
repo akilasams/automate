@@ -87,7 +87,7 @@ const MainNav = () => {
   const location = useLocation();
 
   // const [authState, setAuthState] = useState(false);
-  const { authState, setAuthState } = useContext(AuthContext);
+  const { authState, setAuthState, user } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -207,7 +207,7 @@ const MainNav = () => {
               color='primary'
               style={{ marginRight: '8px', fontWeight: 'bold' }}
             >
-              NAME
+              {user.firstName}
             </Typography>
             <IconButton
               aria-label='account of current user'

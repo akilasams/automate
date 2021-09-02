@@ -29,6 +29,7 @@ const theme = createTheme({
 
 function App() {
   const [authState, setAuthState] = useState(false);
+  const [user, setUser] = useState({ firstName: '', id: '' });
 
   useEffect(() => {
     axios
@@ -42,13 +43,14 @@ function App() {
           setAuthState(false);
         } else {
           setAuthState(true);
+          setUser({ firstName: response.data.firstName, id: response.data.id });
         }
       });
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <AuthContext.Provider value={{ authState, setAuthState }}>
+      <AuthContext.Provider value={{ authState, setAuthState, user, setUser }}>
         <Router>
           <Switch>
             <Layout>
