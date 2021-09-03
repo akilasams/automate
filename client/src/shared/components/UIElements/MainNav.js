@@ -15,6 +15,7 @@ import Menu from '@material-ui/core/Menu';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
+import Modal from './Modal';
 // import axios from 'axios';
 // import { useEffect } from 'react';
 // import BeforeSignUp from '../../../pages/user/components/BeforeSignUp';
@@ -89,7 +90,11 @@ const MainNav = () => {
   // const [authState, setAuthState] = useState(false);
   const { authState, setAuthState, user } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [showPostAd, setShowPostAd] = useState(false);
   const open = Boolean(anchorEl);
+
+  const openPostAdHandler = () => setShowPostAd(true);
+  const closePostAdHandler = () => setShowPostAd(false);
 
   // useEffect(() => {
   //   axios
@@ -193,51 +198,76 @@ const MainNav = () => {
             </Button>
           </div>
         ) : (
-          <div className={classes.navlinks}>
-            <Button
-              className={classes.postAdButton}
-              color='primary'
-              variant='contained'
+          <React.Fragment>
+            <Modal
+              show={showPostAd}
+              onCancel={closePostAdHandler}
+              header='Post An Ad'
+              // contentClass='place-item__modal-content'
+              // footerClass='place-item__modal-actions'
+              footer={
+                <Button
+                  className={classes.postAdButton}
+                  color='primary'
+                  variant='contained'
+                  onClick={closePostAdHandler}
+                >
+                  Publish Ad
+                </Button>
+              }
             >
-              <Link to='' style={{ textDecoration: 'none', color: '#fff' }}>
-                Post an Ad
-              </Link>
-            </Button>
-            <Typography
-              color='primary'
-              style={{ marginRight: '8px', fontWeight: 'bold' }}
-            >
-              {user.firstName}
-            </Typography>
-            <IconButton
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleMenu}
-              color='inherit'
-            >
-              <AccountCircle color='primary' />
-            </IconButton>
-            <Menu
-              id='menu-appbar'
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>My Profile</MenuItem>
-              <MenuItem onClick={handleClose}>Settings</MenuItem>
-              <MenuItem onClick={logout}>Sign Out</MenuItem>
-            </Menu>
-          </div>
+              <div className='modal-form-container'>
+                <h2>THE FORM</h2>
+              </div>
+            </Modal>
+            <div className={classes.navlinks}>
+              <Button
+                className={classes.postAdButton}
+                color='primary'
+                variant='contained'
+                onClick={openPostAdHandler}
+                disableElevation
+              >
+                <Link to='' style={{ textDecoration: 'none', color: '#fff' }}>
+                  Post an Ad
+                </Link>
+              </Button>
+              <Typography
+                color='primary'
+                style={{ marginRight: '8px', fontWeight: 'bold' }}
+              >
+                {user.firstName}
+              </Typography>
+              <IconButton
+                aria-label='account of current user'
+                aria-controls='menu-appbar'
+                aria-haspopup='true'
+                onClick={handleMenu}
+                color='inherit'
+              >
+                <AccountCircle color='primary' />
+              </IconButton>
+              <Menu
+                id='menu-appbar'
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}>My Profile</MenuItem>
+                <MenuItem onClick={handleClose}>Settings</MenuItem>
+                <MenuItem onClick={logout}>Sign Out</MenuItem>
+              </Menu>
+            </div>
+          </React.Fragment>
         )}
       </Toolbar>
     </AppBar>
