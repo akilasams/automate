@@ -1,0 +1,14 @@
+.shopContainer {
+  padding: 20px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.itemContainer {
+  padding: 30px;
+}
+
+.searchBarContainer {
+  width: 50%;
+}
