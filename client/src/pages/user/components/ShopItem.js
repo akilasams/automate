@@ -6,15 +6,18 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 const ShopItem = (props) => {
+  const { details } = props;
+
   return (
     <Card>
-      <CardHeader title='AAAAA' subheader='24th of July' />
+      <CardHeader title={details.itemName} subheader={details.condition} />
       <CardMedia />
       <CardContent>
         <Typography variant='body2' color='textSecondary' component='p'>
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {details.description}
+        </Typography>
+        <Typography variant='body2' color='textSecondary' component='p'>
+          {details.unitPrice}
         </Typography>
       </CardContent>
       <CardActions>
