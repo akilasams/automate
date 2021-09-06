@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 const usersRouter = require('./routes/Users');
 app.use('/user', usersRouter);
 const shopsRouter = require('./routes/Shops');
-app.use('/shops', shopsRouter);
+app.use('/shop', shopsRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {

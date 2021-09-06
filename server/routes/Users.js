@@ -72,6 +72,12 @@ router.post('/login', async (req, res) => {
   });
 });
 
+router.get('/byId/:userId', async (req, res) => {
+  const userId = req.params.userId;
+  const user = await Users.findOne({ where: { id: userId } });
+  res.json(user);
+});
+
 router.get('/auth', validateToken, (req, res) => {
   res.json(req.user);
 });
