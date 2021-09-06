@@ -17,7 +17,7 @@ const ShopItemList = () => {
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/shops/getItems')
+      .get('http://localhost:3001/shop/getItems')
       .then((res) => {
         console.log(res.data);
         setShopItems(res.data);

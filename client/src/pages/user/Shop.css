@@ -8,6 +8,8 @@
 
 .itemContainer {
   padding: 30px;
+  /* height: 100vh; */
+  overflow-y: scroll;
 }
 
 .searchBarContainer {
