@@ -1,14 +1,18 @@
 .shopContainer {
   padding: 20px;
-  display: flex;
+  /* display: flex;
   flex-flow: column;
-  align-items: center;
+  align-items: center; */
+  width: 100vw;
 }
 
 .itemContainer {
   padding: 30px;
+  /* height: 100vh; */
+  overflow-y: scroll;
 }
 
 .searchBarContainer {
+  padding-left: 360px;
   width: 50%;
 }
