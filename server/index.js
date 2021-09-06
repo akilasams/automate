@@ -12,6 +12,9 @@ const usersRouter = require('./routes/Users');
 app.use('/user', usersRouter);
 const shopsRouter = require('./routes/Shops');
 app.use('/shop', shopsRouter);
+const ContactRouter = require('./routes/Contact');
+app.use('/contactus', ContactRouter);
+
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
