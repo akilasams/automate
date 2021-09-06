@@ -10,6 +10,9 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { useFormik } from 'formik';
+import axios from 'axios';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -43,8 +46,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const initialValues = {
+  name: '',
+  email: '',
+  message: '',
+  
+};
+
+const onSubmit = (data) => {
+  axios.post('http://localhost:3001/contactus/contact', data).then(() => {
+    console.log(data);
+  });
+};
+
 export default function ContactUs() {
   const classes = useStyles();
+  const formik = useFormik({
+    initialValues, //userRegisterSchema,
+    onSubmit,
+});
+
   return (
     <div>
       <Typography component='h1' variant='h5' style={{ color: '#42207A' }}>
@@ -77,6 +98,7 @@ export default function ContactUs() {
                 </b>
               </Typography>
               <br></br>
+              <form onSubmit={formik.handleSubmit}>
               <TextField
                 variant='outlined'
                 margin='normal'
@@ -87,6 +109,9 @@ export default function ContactUs() {
                 name='name'
                 autoComplete='name'
                 autoFocus
+                onChange={formik.handleChange}
+                error={formik.touched.name && Boolean(formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
               />
               <TextField
                 variant='outlined'
@@ -98,6 +123,9 @@ export default function ContactUs() {
                 name='email'
                 autoComplete='email'
                 autoFocus
+                onChange={formik.handleChange}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
               />
               <TextField
                 multiline
@@ -112,6 +140,9 @@ export default function ContactUs() {
                 name='message'
                 autoComplete='message'
                 autoFocus
+                onChange={formik.handleChange}
+                error={formik.touched.message && Boolean(formik.errors.message)}
+                helperText={formik.touched.message && formik.errors.message}
               />
               <Button
                 type='submit'
@@ -124,6 +155,7 @@ export default function ContactUs() {
               >
                 Send Message
               </Button>
+              </form>
             </Grid>
           </Grid>
         </Grid>
