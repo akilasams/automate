@@ -14,6 +14,8 @@ const shopsRouter = require('./routes/Shops');
 app.use('/shop', shopsRouter);
 const ContactRouter = require('./routes/Contact');
 app.use('/contactus', ContactRouter);
+const AdsRouter = require('./routes/ShopItems');
+app.use('/ads', AdsRouter);
 
 
 db.sequelize.sync().then(() => {
