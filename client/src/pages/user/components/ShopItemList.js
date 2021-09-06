@@ -31,12 +31,7 @@ const ShopItemList = () => {
     <Grid container spacing={2}>
       {shopItems.map((shopItem) => (
         <Grid item xs={12} md={6} sm={4} lg={3} key={shopItem.id}>
-          <Link
-            to={`/shops/getItems/${shopItem.id}`}
-            style={{ textDecoration: 'none' }}
-          >
-            <ShopItem details={shopItem} />
-          </Link>
+          <ShopItem details={shopItem} />
         </Grid>
       ))}
     </Grid>
