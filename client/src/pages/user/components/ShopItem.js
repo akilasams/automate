@@ -90,7 +90,8 @@ const ShopItem = (props) => {
         <div className='content-container'>
           {shopDetails.shopName} <br />
           {details.description} <br />
-          Contact Details <br />
+          <br />
+          <b>Contact Details</b> <br />
           Email : {userDetails.email} <br />
           Mobile Number : {userDetails.mobileNumber}
         </div>

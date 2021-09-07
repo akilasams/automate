@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
+import { Link } from 'react-router-dom';
 
 const useStyle = makeStyles({
   field: {
@@ -79,6 +80,17 @@ function LoginForm() {
       <Button color='primary' variant='contained' type='submit'>
         LOGIN
       </Button>
+      <Link
+        to='/Login'
+        style={{
+          textDecoration: 'none',
+          color: 'primary',
+          fontSize: '10px',
+          marginBottom: '20px',
+        }}
+      >
+        Forgot Password?
+      </Link>
     </form>
   );
 }
