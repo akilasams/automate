@@ -15,17 +15,17 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Menu from './components/Menu';
-import Category from './components/Category';
+import Menu from '../user/components/Menu';
+import Category from '../user/components/Category';
 import Divider from '@material-ui/core/Divider';
 import PublishIcon from '@material-ui/icons/Publish';
-import Navbar from '../components/navbar';
-import Footer from '../components/footer';
+//import Navbar from '../components/navbar';
+//import Footer from '../components/footer';
 import { useHistory } from 'react-router';
 import { useFormik, FormikProvider } from 'formik';
 import axios from 'axios';
-import ImageUploading from 'react-images-uploading';
-import { QuantityPicker } from 'react-qty-picker';
+//import ImageUploading from 'react-images-uploading';
+//import { QuantityPicker } from 'react-qty-picker';
 
 
 function Copyright() {
@@ -226,7 +226,6 @@ function PostanAd(props) {
 
   return (
     <div className="App">
-       <Navbar />
        <br></br>
     <Grid
       container
@@ -236,7 +235,7 @@ function PostanAd(props) {
       justify="center"
       style={{ minHeight: '100vh' }}
     >
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={20} sm={20} md={20} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Typography component="h1" variant="h4" style={{ color: '#42207A' }}>
             <b> POST YOUR AD</b>
@@ -438,7 +437,6 @@ function PostanAd(props) {
       </Grid>
     </Grid>
     <br></br>
-    <Footer/>
     </div>
   );
 }
