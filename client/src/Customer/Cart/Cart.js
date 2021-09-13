@@ -1,4 +1,4 @@
-import '../App.css';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -27,9 +27,9 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Footer from '../components/footerc';
+
 import {Link} from 'react-router-dom';
-import Navbar from '../components/navbar';
+
 
 const useTableStyles = makeStyles({
   tableT: {
@@ -126,9 +126,6 @@ export default function App() {
  
   return (
     <div className="App">
-
-    <Navbar />
-    
       <React.Fragment>
       <CssBaseline />
       <Container maxWidth="100vw">
@@ -183,7 +180,6 @@ export default function App() {
         </CardContent>
     </Card>
     </div>
-    <Footer/>
   </div>
 
    );
