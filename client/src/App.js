@@ -5,6 +5,8 @@ import About from './pages/user/About';
 import ContactUs from './pages/user/ContactUs';
 import Blog from './pages/user/Blog';
 import Shop from './pages/user/Shop';
+import Cart from './Customer/Cart/Cart';
+import Payment from './Customer/Payment/Payment';
 import Dashboard from './pages/admin/Dashboard';
 import Customers from './pages/admin/Customers';
 import Advertisements from './pages/admin/Advertisements';
@@ -59,6 +61,8 @@ function App() {
               <Route path='/ContactUs' component={ContactUs} />
               <Route path='/Blog' component={Blog} />
               <Route path='/Shop' component={Shop} />
+              <Route path='/Payment' component={Payment} />
+              <Route path='/Cart' component={Cart} />
               <Route path='/Login' component={AuthForm} />
               <Route path='/SignUpShop' component={AuthForm} />
               <Route path='/SignUpIndi' component={AuthForm} />

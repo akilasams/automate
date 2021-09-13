@@ -17,9 +17,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
 import PostanAd from '../../../pages/user/postanAd';
 import Modal from './Modal';
-// import axios from 'axios';
-// import { useEffect } from 'react';
-// import BeforeSignUp from '../../../pages/user/components/BeforeSignUp';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -79,6 +77,9 @@ const useStyles = makeStyles((theme) => {
     },
     avatar: {
       marginLeft: theme.spacing(2),
+    },
+    ShoppingCartIcon:{
+    color:'#42207A',
     },
   };
 });
@@ -144,6 +145,10 @@ const MainNav = () => {
       text: 'SHOP',
       path: '/Shop',
     },
+    {
+      text: 'CART',
+      path: '/Cart'
+    },
   ];
 
   if (location.pathname.match('/Admin')) {
@@ -167,7 +172,6 @@ const MainNav = () => {
             >
               <ListItem
                 className={classes.listitem}
-                // onClick={() => history.push(listItem.path)}
               >
                 <ListItemText primary={listItem.text} />
               </ListItem>
@@ -216,10 +220,16 @@ const MainNav = () => {
                Publish Ad
               </Button>
               }
-            >
+            
+              <div className='modal-form-container'>
+                <h2>THE FORM</h2>
+              </div>
+              <IconButton>
+            <ShoppingCartIcon style = {{color:'#42207A'}} />
+          </IconButton>
               {/* <div className='modal-form-container'> */}
                 <PostanAd/>
-              {/* </div> */}
+              {/* </div> */>
             </Modal>
             <div className={classes.navlinks}>
               <Button

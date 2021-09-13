@@ -1,4 +1,4 @@
-import '../App.css';
+
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,8 +18,6 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ChatIcon from '@material-ui/icons/Chat';
 import CallIcon from '@material-ui/icons/Call';
-import headlamp from '../images/HeadLamp.jpg';
-import Verticalg from '../images/Verticalg.jpg';
 import Grid from '@material-ui/core/Grid';
 import CopyrightIcon from '@material-ui/icons/Copyright';
 import Paper from '@material-ui/core/Paper';
@@ -28,9 +26,7 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Footer from '../components/footerp';
 import {Link} from "react-router-dom";
-import Navbar from '../components/navbar';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -109,7 +105,6 @@ export default function App() {
  
   return (
     <div className="App">
-  <Navbar/>
       <React.Fragment>
       <CssBaseline />
       <Container maxWidth="100vw">
@@ -130,9 +125,6 @@ export default function App() {
            <Typography gutterBottom variant="subtitle1" style={{fontSize: 30}}>
                 <b>Toyota - Head Lamp</b>
                 </Typography>
-             <ButtonBase className={Verticalg}>
-             <img src={headlamp} alt="headlamp" style={{  height: '42vh',width:'30vw',alignItems:'revert',left:'2vw'}}/>
-            </ButtonBase>
           </Grid>
           </Grid>
           <Grid item xs={12} sm container>
@@ -246,7 +238,6 @@ export default function App() {
       </Grid>
       </Container>   
     </React.Fragment>
-    <Footer/>
 </div>
 
    );
