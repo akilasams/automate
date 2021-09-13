@@ -15,6 +15,7 @@ import Menu from '@material-ui/core/Menu';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
+import PostanAd from '../../../pages/user/postanAd';
 import Modal from './Modal';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
@@ -210,22 +211,25 @@ const MainNav = () => {
               // contentClass='place-item__modal-content'
               // footerClass='place-item__modal-actions'
               footer={
-                <Button
-                  className={classes.postAdButton}
-                  color='primary'
-                  variant='contained'
-                  onClick={closePostAdHandler}
-                >
-                  Publish Ad
-                </Button>
+              <Button
+              className={classes.postAdButton}
+              color='primary'
+              variant='contained'
+              onClick={closePostAdHandler}
+              >
+               Publish Ad
+              </Button>
               }
-            >
+            
               <div className='modal-form-container'>
                 <h2>THE FORM</h2>
               </div>
               <IconButton>
             <ShoppingCartIcon style = {{color:'#42207A'}} />
           </IconButton>
+              {/* <div className='modal-form-container'> */}
+                <PostanAd/>
+              {/* </div> */>
             </Modal>
             <div className={classes.navlinks}>
               <Button

@@ -50,6 +50,10 @@ module.exports = (sequelize, DataTypes) => {
       foreginKey: 'userId',
       onDelete: 'cascade',
     });
+    Users.hasMany(models.Contact, {
+      foreginKey: 'userId',
+      onDelete: 'cascade',
+    });
   };
 
   return Users;
