@@ -12,8 +12,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import PropTypes from 'prop-types'; 
 import Box from '@material-ui/core/Box';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SearchIcon from '@material-ui/icons/Search';
 import {Select,MenuItem } from '@material-ui/core';
 import { purple } from '@material-ui/core/colors';
