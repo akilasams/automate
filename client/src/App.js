@@ -17,6 +17,8 @@ import AuthForm from './pages/user/AuthForm';
 import { AuthContext } from './helpers/AuthContext';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Cartform from './Customer/AddtoCart/Cartform';
+import SelectQ from './pages/user/components/SelectQ';
 
 const theme = createTheme({
   palette: {
@@ -63,6 +65,8 @@ function App() {
               <Route path='/Shop' component={Shop} />
               <Route path='/Payment' component={Payment} />
               <Route path='/Cart' component={Cart} />
+              <Route path='/Cartform' component={Cartform} />
+              <Route path='/SelectQ' component={SelectQ} />
               <Route path='/Login' component={AuthForm} />
               <Route path='/SignUpShop' component={AuthForm} />
               <Route path='/SignUpIndi' component={AuthForm} />
@@ -72,6 +76,7 @@ function App() {
               <Route path='/Admin/Advertisements' component={Advertisements} />
               <Route path='/Admin/Registrations' component={Registrations} />
               <Route path='/Admin/AddBlog' component={AddBlog} />
+              
             </Layout>
           </Switch>
         </Router>

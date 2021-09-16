@@ -19,6 +19,8 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import {Link} from "react-router-dom";
+import './Shop.css';
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -37,6 +39,11 @@ const useStyles = makeStyles((theme) => ({
     width: 500,
     height: 270,
   },
+  searchBarContainer: {
+    padding: '360px',
+    width: '50%',
+  },
+
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -103,9 +110,9 @@ export default function App() {
       </Container>
     </React.Fragment>
   
-    <div className="searchbar">
-    <Tab aria-label="Searchicon" style={{color:'#42207A'}} icon={<SearchIcon/>} {...a11yProps(5)} />
-    <input type="text" placeholder = "Search..."/>
+    <div className=" searchBar">
+    <Tab aria-label="Searchicon" style={{color:'#42207A' , marginLeft: '40%', marginTop: '0%'}} icon={<SearchIcon/>} {...a11yProps(5)} />
+    <input type="text" style={{fontSize: '20px',marginTop: '5%'}} placeholder = "Search..."/>
     </div>
 
     <div className={classes.filter}>

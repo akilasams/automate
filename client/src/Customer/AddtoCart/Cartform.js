@@ -11,13 +11,12 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Menu from '../components/Menu';
-import Category from '../components/Category';
 import Divider from '@material-ui/core/Divider';
 import PublishIcon from '@material-ui/icons/Publish';
-import Quantity from '../components/Quantity';
+import SelectQ from '../../pages/user/components/SelectQ';
 import { useFormik } from 'formik';
 import axios from 'axios';
+
 
 function Copyright() {
   return (
@@ -46,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: 'center',
   },
   paper: {
-    margin: theme.spacing(8, 4),
+    margin: theme.spacing(10, 7),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -60,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(4, 0, 2),
   },
   input: {
     display: 'none',
@@ -69,13 +68,30 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3),
     position: 'relative'
   },
+  heading: {
+    fontFamily : 'Lato'
+  },
 }));
 
 const initialValues = {
   item: '',
   price: '',
   quantity: '',
-};
+}
+const options = [
+
+  {value : '1', label: '1' },
+  {value : '2', label: '2'},
+  {value : '3', label: '3'},
+  {value : '4', label: '4'},
+  {value : '5', label: '2'},
+  {value : '5', label: '5'},
+  {value : '6', label: '6'},
+  {value : '7', label: '7'},
+  {value : '8', label: '8'},
+  {value : '9', label: '9'},
+  {value : '10', label: '10'},
+]
 const onSubmit = (data) => {
   axios.post('http://localhost:3001/cart/addtocart', data).then(() => {
     console.log(data);
@@ -99,14 +115,17 @@ export default function Cartform() {
       justify="center"
       style={{ minHeight: '100vh' }}
     >
-      <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      <Grid item xs={12} sm={10} md={5} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Typography component="h1" variant="h4" style={{ color: '#42207A' }}>
-            <b>ADD ITEM TO CART</b>
+            <b>Add Details</b>
           </Typography>
+          <br></br>
           <form className={classes.form} noValidate onSubmit={formik.handleSubmit}>
-            <Typography component="h1" variant="h6" align="left" style={{ color: 'black' }}>
-              <b> DETAILS</b>
+          <Typography component="h4" variant="h8" align="left" style={{ color: 'black' }}>
+            <div className={classes.heading}>
+              Item 
+            </div>
             </Typography>
             <TextField
               variant="outlined"
@@ -122,7 +141,23 @@ export default function Cartform() {
               error={formik.touched.name && Boolean(formik.errors.name)}
               helperText={formik.touched.name && formik.errors.name}
             />
-            <TextField
+            <Typography component="h4" variant="h8" align="left" style={{ color: 'black' }}>
+            <div className={classes.heading}>
+              Quantity
+            </div>
+            </Typography>
+            <br></br>
+            <SelectQ options = {options}
+              value = {formik.values.quantity}
+              onChange = {value=>formik.setFieldValue('quantity',value.value)}
+             />
+             <br></br>
+              <Typography component="h4" variant="h8" align="left" style={{ color: 'black' }}>
+            <div className={classes.heading}>
+              Price
+            </div>
+            </Typography>
+              <TextField
               multiline
               rows={4}
               rowsMax={1}
@@ -139,15 +174,6 @@ export default function Cartform() {
               error={formik.touched.name && Boolean(formik.errors.name)}
               helperText={formik.touched.name && formik.errors.name}
             />
-            <Quantity />
-            <List>
-              <ListItem alignItems="center">
-                <FormControlLabel
-                  control={<Checkbox value="proceed" color="primary" />}
-                  label="Proceed"
-                />
-              </ListItem>
-            </List>
             <Button
               type="submit"
               variant="contained"

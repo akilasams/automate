@@ -27,7 +27,6 @@ import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-
 import {Link} from 'react-router-dom';
 
 
@@ -134,7 +133,7 @@ export default function App() {
     </React.Fragment>
    
   <div>
-  <Typography variant="h4" className={classes.title}style={{color:'#42207A' , marginTop: '3%'}}>
+  <Typography variant="h4" className={classes.title}style={{color:'#42207A' , marginTop: '3%', marginLeft:'48%' }}>
            <b>Your Cart</b> 
   </Typography>
   <Typography variant="h6" className={classes.title}style={{color:'#42207A' , marginTop: '3%'}}>
