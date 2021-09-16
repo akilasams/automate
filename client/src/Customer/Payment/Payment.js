@@ -21,12 +21,17 @@ import CallIcon from '@material-ui/icons/Call';
 import Grid from '@material-ui/core/Grid';
 import CopyrightIcon from '@material-ui/icons/Copyright';
 import Paper from '@material-ui/core/Paper';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import { NavLink, useHistory, useLocation } from 'react-router-dom'; 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import {Link} from "react-router-dom";
+import { useState } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../helpers/AuthContext';
+import Modal from '../../shared/components/UIElements/ModalCart';
+import Cartform from '../AddtoCart/Cartform';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,6 +51,16 @@ const useStyles = makeStyles((theme) => ({
     width: 1000,
     height: 620,
     marginTop: 80,
+  },
+  CartButton: {
+    marginLeft: 5,
+    marginRight: '15px',
+    height: '40px',
+    width: '140px',
+  },
+  navlink: {
+    textDecoration: 'none',
+    borderRadius: '4px',
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -89,6 +104,17 @@ function a11yProps(index) {
 
 export default function App() {
   const classes = useStyles();
+  const history = useHistory();
+  const location = useLocation();
+
+  const { authState, setAuthState, user } = useContext(AuthContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [showCartForm, setShowCartForm] = useState(false);
+  const open = Boolean(anchorEl);
+
+  const openCartFormHandler = () => setShowCartForm(true);
+  const closeCartFormHandler = () => setShowCartForm(false);
+
   const [value, setValue] = React.useState("");
   
   const updateSelectVal=(e)=>{
@@ -220,7 +246,30 @@ export default function App() {
                 Price: <b>Rs. 6 000/=</b>
                 <Typography gutterBottom variant="subtitle1" style={{fontSize: 18, color: '	#006400'}}>
               Order Online :
-              <Button component ={Link} to= "/Cart" style={{ backgroundColor: '#42207A',color:"#ffffff", left: '20px' }} >ADD TO CART</Button>
+
+              <React.Fragment>
+              <Modal
+              show={showCartForm}
+              onCancel={closeCartFormHandler}
+              header='Add Item To Cart'
+            >
+               {/* <div className='modal-form-container'> */}
+               <Cartform/>
+              {/* </div> */}
+            </Modal>
+        
+              <Button
+                className={classes.CartButton}
+                color='primary'
+                variant='contained'
+                onClick={openCartFormHandler}
+                disableElevation
+              >
+                <Link to='' style={{ textDecoration: 'none', color: '#fff' }}>
+                  Add To Cart
+                </Link>
+              </Button>
+              </React.Fragment>
               </Typography>
               </Typography>
         </CardContent>

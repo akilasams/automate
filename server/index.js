@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-
+const bodyParser = require('body-parser');
 const db = require('./models');
 
 app.use(cors());
@@ -16,7 +16,8 @@ const ContactRouter = require('./routes/Contact');
 app.use('/contactus', ContactRouter);
 const AdsRouter = require('./routes/ShopItems');
 app.use('/ads', AdsRouter);
-
+const CartRouter = require('./routes/AddToCart');
+app.use('/cart', CartRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
