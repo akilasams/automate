@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { ShopItems } = require('../models');
 
+router.get('/', async (req, res) => { 
+  const listofAds = await ShopItems.findAll();
+  res.json(listofAds);
+});
 
 router.post('/postad', async (req, res) => {
   const { name, description, price, quantity, condition, category, vehicleModel, year, country, photo1} = req.body;
