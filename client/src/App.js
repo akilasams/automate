@@ -17,13 +17,10 @@ import AuthForm from './pages/user/AuthForm';
 import { AuthContext } from './helpers/AuthContext';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-<<<<<<< HEAD
 import Cartform from './Customer/AddtoCart/Cartform';
 import SelectQ from './pages/user/components/SelectQ';
-=======
 import PostAnAdForm from './pages/user/components/PostAnAdForm';
 import PaymentForm from './pages/user/components/PaymentForm';
->>>>>>> improvements
 
 const theme = createTheme({
   palette: {
@@ -83,7 +80,6 @@ function App() {
               <Route path='/Admin/Advertisements' component={Advertisements} />
               <Route path='/Admin/Registrations' component={Registrations} />
               <Route path='/Admin/AddBlog' component={AddBlog} />
-              
             </Layout>
           </Switch>
         </Router>
