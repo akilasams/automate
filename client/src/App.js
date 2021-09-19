@@ -5,7 +5,7 @@ import About from './pages/user/About';
 import ContactUs from './pages/user/ContactUs';
 import Blog from './pages/user/Blog';
 import Shop from './pages/user/Shop';
-import Cart from './Customer/Cart/Cart';
+import Cart from './pages/user/Cart';
 import Payment from './Customer/Payment/Payment';
 import Dashboard from './pages/admin/Dashboard';
 import Customers from './pages/admin/Customers';
@@ -19,6 +19,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cartform from './Customer/AddtoCart/Cartform';
 import SelectQ from './pages/user/components/SelectQ';
+import PostAnAdForm from './pages/user/components/PostAnAdForm';
+import PaymentForm from './pages/user/components/PaymentForm';
 
 const theme = createTheme({
   palette: {
@@ -33,7 +35,7 @@ const theme = createTheme({
 
 function App() {
   const [authState, setAuthState] = useState(false);
-  const [user, setUser] = useState({ firstName: '', id: '' });
+  const [user, setUser] = useState({ firstName: '', id: '', userRole: '' });
 
   useEffect(() => {
     axios
@@ -47,7 +49,11 @@ function App() {
           setAuthState(false);
         } else {
           setAuthState(true);
-          setUser({ firstName: response.data.firstName, id: response.data.id });
+          setUser({
+            firstName: response.data.firstName,
+            id: response.data.id,
+            userRole: response.data.userRole,
+          });
         }
       });
   }, []);
@@ -67,16 +73,17 @@ function App() {
               <Route path='/Cart' component={Cart} />
               <Route path='/Cartform' component={Cartform} />
               <Route path='/SelectQ' component={SelectQ} />
+              <Route path='/PostAnAd' component={PostAnAdForm} />
               <Route path='/Login' component={AuthForm} />
               <Route path='/SignUpShop' component={AuthForm} />
               <Route path='/SignUpIndi' component={AuthForm} />
               <Route path='/BeforeSignUp' component={AuthForm} />
+              <Route path='/PaymentForm' component={PaymentForm} />
               <Route exact path='/Admin' component={Dashboard} />
               <Route path='/Admin/Customers' component={Customers} />
               <Route path='/Admin/Advertisements' component={Advertisements} />
               <Route path='/Admin/Registrations' component={Registrations} />
               <Route path='/Admin/AddBlog' component={AddBlog} />
-              
             </Layout>
           </Switch>
         </Router>

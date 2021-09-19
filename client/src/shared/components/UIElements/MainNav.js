@@ -15,7 +15,12 @@ import Menu from '@material-ui/core/Menu';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Modal from './Modal';
+import PostAnAdForm from '../../../pages/user/components/PostAnAdForm';
+// import axios from 'axios';
+// import { useEffect } from 'react';
+// import BeforeSignUp from '../../../pages/user/components/BeforeSignUp';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -76,6 +81,10 @@ const useStyles = makeStyles((theme) => {
     avatar: {
       marginLeft: theme.spacing(2),
     },
+    // buttonSubmit: {
+    //   margin: 7,
+    //   width: '500px',
+    // },
   };
 });
 
@@ -121,6 +130,7 @@ const MainNav = () => {
     setAnchorEl(null);
     localStorage.removeItem('accessToken');
     setAuthState(false);
+    history.push('/');
   };
 
   const menuItems = [
@@ -139,10 +149,6 @@ const MainNav = () => {
     {
       text: 'SHOP',
       path: '/Shop',
-    },
-    {
-      text: 'CART',
-      path: '/Cart',
     },
   ];
 
@@ -165,9 +171,7 @@ const MainNav = () => {
               activeClassName={classes.active}
               key={listItem.text}
             >
-              <ListItem
-                className={classes.listitem}
-              >
+              <ListItem className={classes.listitem}>
                 <ListItemText primary={listItem.text} />
               </ListItem>
             </NavLink>
@@ -199,45 +203,41 @@ const MainNav = () => {
           </div>
         ) : (
           <React.Fragment>
-            <Modal
+            {/* <Modal
               show={showPostAd}
               onCancel={closePostAdHandler}
               header='Post An Ad'
-              // contentClass='place-item__modal-content'
-              // footerClass='place-item__modal-actions'
-              footer={
+            >
+              <PostAnAdForm />
+            </Modal> */}
+            <div className={classes.navlinks}>
+              {user.userRole !== 'Customer' && (
                 <Button
                   className={classes.postAdButton}
                   color='primary'
                   variant='contained'
-                  onClick={closePostAdHandler}
+                  onClick={openPostAdHandler}
+                  disableElevation
                 >
-                  Publish Ad
+                  <Link
+                    to='/PostAnAd'
+                    style={{ textDecoration: 'none', color: '#fff' }}
+                  >
+                    Post an Ad
+                  </Link>
                 </Button>
-              }
-            >
-              <div className='modal-form-container'>
-                <h2>THE FORM</h2>
-              </div>
-            </Modal>
-            <div className={classes.navlinks}>
-              <Button
-                className={classes.postAdButton}
-                color='primary'
-                variant='contained'
-                onClick={openPostAdHandler}
-                disableElevation
-              >
-                <Link to='' style={{ textDecoration: 'none', color: '#fff' }}>
-                  Post an Ad
-                </Link>
-              </Button>
+              )}
               <Typography
                 color='primary'
                 style={{ marginRight: '8px', fontWeight: 'bold' }}
               >
                 {user.firstName}
               </Typography>
+              <IconButton>
+                <Link to='/Cart'>
+                  <ShoppingCartIcon color='primary' />
+                </Link>
+              </IconButton>
               <IconButton
                 aria-label='account of current user'
                 aria-controls='menu-appbar'

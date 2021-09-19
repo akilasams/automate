@@ -8,6 +8,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
+import { Link } from 'react-router-dom';
 
 const useStyle = makeStyles({
   field: {
@@ -24,7 +25,7 @@ const initialValues = {
 function LoginForm() {
   const classes = useStyle();
 
-  const { setAuthState, setUser } = useContext(AuthContext);
+  const { setAuthState, setUser, user } = useContext(AuthContext);
 
   let history = useHistory();
 
@@ -36,7 +37,11 @@ function LoginForm() {
       } else {
         localStorage.setItem('accessToken', response.data);
         setAuthState(true);
-        history.push('/');
+        if (user.userRole === 'Admin') {
+          history.push('/Admin');
+        } else {
+          history.push('/');
+        }
       }
     });
   };
@@ -79,6 +84,17 @@ function LoginForm() {
       <Button color='primary' variant='contained' type='submit'>
         LOGIN
       </Button>
+      <Link
+        to='/Login'
+        style={{
+          textDecoration: 'none',
+          color: 'primary',
+          fontSize: '10px',
+          marginBottom: '20px',
+        }}
+      >
+        Forgot Password?
+      </Link>
     </form>
   );
 }

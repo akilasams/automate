@@ -2,25 +2,27 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../../helpers/AuthContext';
 
-import ShopItem from './ShopItem';
+import CartItem from './CartItem';
 
 import Grid from '@material-ui/core/Grid';
 // import { Container } from '@material-ui/core';
 
-const ShopItemList = () => {
+const CartItemList = () => {
   // if (props.items.length === 0) {
   //   return <div className='place-list center'>No Items Found</div>;
   // }
-  const [shopItems, setShopItems] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     axios
-      .get('http://localhost:3001/shop/getItems')
+      .get(`http://localhost:3001/cart/getItems/${user.id}`)
       .then((res) => {
-        // console.log(res.data);
-        setShopItems(res.data);
+        console.log(res.data);
+        setCartItems(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -29,13 +31,13 @@ const ShopItemList = () => {
 
   return (
     <Grid container spacing={2}>
-      {shopItems.map((shopItem) => (
-        <Grid item xs={12} md={6} sm={4} lg={3} key={shopItem.id}>
-          <ShopItem details={shopItem} />
+      {cartItems.map((cartItem) => (
+        <Grid item xs={12} md={6} sm={4} lg={3} key={cartItem.id}>
+          <CartItem details={cartItem} />
         </Grid>
       ))}
     </Grid>
   );
 };
 
-export default ShopItemList;
+export default CartItemList;
