@@ -17,7 +17,7 @@ const ContactRouter = require('./routes/Contact');
 app.use('/contactus', ContactRouter);
 const AdsRouter = require('./routes/ShopItems');
 app.use('/ads', AdsRouter);
-const CartRouter = require('./routes/AddToCart');
+const CartRouter = require('./routes/Carts');
 app.use('/cart', CartRouter);
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 

@@ -5,7 +5,7 @@ import About from './pages/user/About';
 import ContactUs from './pages/user/ContactUs';
 import Blog from './pages/user/Blog';
 import Shop from './pages/user/Shop';
-import Cart from './Customer/Cart/Cart';
+import Cart from './pages/user/Cart';
 import Payment from './Customer/Payment/Payment';
 import Dashboard from './pages/admin/Dashboard';
 import Customers from './pages/admin/Customers';
@@ -35,7 +35,7 @@ const theme = createTheme({
 
 function App() {
   const [authState, setAuthState] = useState(false);
-  const [user, setUser] = useState({ firstName: '', id: '' });
+  const [user, setUser] = useState({ firstName: '', id: '', userRole: '' });
 
   useEffect(() => {
     axios
@@ -49,7 +49,11 @@ function App() {
           setAuthState(false);
         } else {
           setAuthState(true);
-          setUser({ firstName: response.data.firstName, id: response.data.id });
+          setUser({
+            firstName: response.data.firstName,
+            id: response.data.id,
+            userRole: response.data.userRole,
+          });
         }
       });
   }, []);

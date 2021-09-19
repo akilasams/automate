@@ -15,6 +15,7 @@ import Menu from '@material-ui/core/Menu';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import Modal from './Modal';
 import PostAnAdForm from '../../../pages/user/components/PostAnAdForm';
 // import axios from 'axios';
@@ -149,10 +150,6 @@ const MainNav = () => {
       text: 'SHOP',
       path: '/Shop',
     },
-    {
-      text: 'CART',
-      path: '/Cart',
-    },
   ];
 
   if (location.pathname.match('/Admin')) {
@@ -214,26 +211,33 @@ const MainNav = () => {
               <PostAnAdForm />
             </Modal> */}
             <div className={classes.navlinks}>
-              <Button
-                className={classes.postAdButton}
-                color='primary'
-                variant='contained'
-                onClick={openPostAdHandler}
-                disableElevation
-              >
-                <Link
-                  to='/PostAnAd'
-                  style={{ textDecoration: 'none', color: '#fff' }}
+              {user.userRole !== 'Customer' && (
+                <Button
+                  className={classes.postAdButton}
+                  color='primary'
+                  variant='contained'
+                  onClick={openPostAdHandler}
+                  disableElevation
                 >
-                  Post an Ad
-                </Link>
-              </Button>
+                  <Link
+                    to='/PostAnAd'
+                    style={{ textDecoration: 'none', color: '#fff' }}
+                  >
+                    Post an Ad
+                  </Link>
+                </Button>
+              )}
               <Typography
                 color='primary'
                 style={{ marginRight: '8px', fontWeight: 'bold' }}
               >
                 {user.firstName}
               </Typography>
+              <IconButton>
+                <Link to='/Cart'>
+                  <ShoppingCartIcon color='primary' />
+                </Link>
+              </IconButton>
               <IconButton
                 aria-label='account of current user'
                 aria-controls='menu-appbar'

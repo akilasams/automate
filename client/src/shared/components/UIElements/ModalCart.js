@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
 
 import Backdrop from './Backdrop';
-import './ModalCart.css';
+// import './ModalCart.css';
 
 const ModalOverlay = (props) => {
   const content = (

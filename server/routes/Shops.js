@@ -61,6 +61,13 @@ router.get('/getItems', async (req, res) => {
   res.json(items);
 });
 
+router.get('/getItem/byId/:itemId', async (req, res) => {
+  const itemId = req.params.itemId;
+
+  const item = await ShopItems.findOne({ where: { id: itemId } });
+  res.json(item);
+});
+
 router.get('/byId/:shopId', async (req, res) => {
   const shopId = req.params.shopId;
   const shop = await Shops.findOne({ where: { id: shopId } });

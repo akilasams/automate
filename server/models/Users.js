@@ -32,17 +32,17 @@ module.exports = (sequelize, DataTypes) => {
 
   Users.associate = (models) => {
     Users.hasMany(models.Orders, {
-      foreginKey: 'userId',
+      foreignKey: 'userId',
       onDelete: 'cascade',
     });
 
     Users.hasMany(models.Blogs, {
-      foreginKey: 'userId',
+      foreignKey: 'userId',
       onDelete: 'cascade',
     });
 
     Users.hasMany(models.Complaints, {
-      foreginKey: 'userId',
+      foreignKey: 'userId',
       onDelete: 'cascade',
     });
   };

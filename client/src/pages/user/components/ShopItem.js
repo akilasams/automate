@@ -5,7 +5,8 @@ import { CardActions, IconButton, Typography } from '@material-ui/core';
 import { CardHeader, CardMedia, CardContent } from '@material-ui/core';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { TextField } from '@material-ui/core';
 import axios from 'axios';
 import Modal from '../../../shared/components/UIElements/Modal';
 import { Button } from '@material-ui/core';
@@ -23,6 +24,18 @@ const useStyles = makeStyles((theme) => {
       height: '40px',
       width: '150px',
     },
+    quantityField: {
+      height: '40px',
+      width: '100px',
+    },
+    media: {
+      height: 0,
+      paddingTop: '56.25%', // 16:9
+    },
+    card: {
+      display: 'flex',
+      // flexFlow: 'column',
+    },
   };
 });
 
@@ -34,6 +47,7 @@ const ShopItem = (props) => {
 
   const [userDetails, setUserDetails] = useState({});
   const [shopDetails, setShopDetails] = useState({});
+  const [quantity, setQuantity] = useState(1);
 
   const [itemShow, setitemShow] = useState(false);
 
@@ -60,21 +74,44 @@ const ShopItem = (props) => {
   }, []);
 
   const openItemShowHandler = () => setitemShow(true);
-  const closeItemShowHandler = () => {
+  const closeItemShowHandler = () => setitemShow(false);
+
+  const handleQuantity = (event) => {
+    setQuantity(event.target.value);
+  };
+
+  const addtoCartHandler = () => {
     const data = {
       itemId: details.id,
-      userId: user.id,
+      quantity: quantity,
+      unitPrice: details.unitPrice,
     };
-    axios
-      .post(`http://localhost:3001/shop/placeOrder`, data)
-      .then((res) => {
-        history.push({ pathname: '/PaymentForm', state: res.data });
-        setitemShow(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+
+    if (quantity <= details.quantity) {
+      axios
+        .post(`http://localhost:3001/cart/addToCart/${user.id}`, data)
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
+
+  // const data = {
+  //   itemId: details.id,
+  //   userId: user.id,
+  // };
+  // axios
+  //   .post(`http://localhost:3001/shop/placeOrder`, data)
+  //   .then((res) => {
+  //     history.push({ pathname: '/PaymentForm', state: res.data });
+  //     setitemShow(false);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
 
   return (
     <>
@@ -96,7 +133,7 @@ const ShopItem = (props) => {
               className={classes.postAdButton}
               color='primary'
               variant='contained'
-              onClick={closeItemShowHandler}
+              onClick={addtoCartHandler}
             >
               Add to Cart
             </Button>
@@ -109,7 +146,32 @@ const ShopItem = (props) => {
         </div>
         <div className='content-container'>
           {shopDetails.shopName} <br />
+          {details.unitPrice} LKR <br />
+          {details.quantity <= 0 ? 'Out of Stock' : 'In Stock'}
+          <br />
           {details.description} <br />
+          <p style={{ fontSize: '10px' }}>
+            Model No : {details.modelNo}
+            <br />
+            Manufactured Year : {details.year}
+            <br />
+            Manufactured Country :{details.country} <br />
+            <br />
+          </p>
+          <TextField
+            className={classes.quantityField}
+            id='filled-number'
+            label='Quantity'
+            type='number'
+            value={quantity}
+            onChange={handleQuantity}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            variant='standard'
+          />
+          <br />
+          <br />
           <br />
           <b>Contact Details</b> <br />
           Email : {userDetails.email} <br />
@@ -117,30 +179,32 @@ const ShopItem = (props) => {
         </div>
         {/* </div> */}
       </Modal>
-      <Card onClick={openItemShowHandler} style={{ cursor: 'pointer' }}>
-        <CardHeader title={details.itemName} subheader={shopDetails.shopName} />
-        {/* <CardMedia /> */}
-        <CardContent>
-          <Typography variant='body2' color='textSecondary' component='p'>
-            {details.description}
-          </Typography>
-          <Typography variant='body2' color='textSecondary' component='p'>
-            {details.unitPrice} LKR
-          </Typography>
-          <Typography variant='body2' color='textSecondary' component='h4'>
-            Contact Details <br />
-            Email : {userDetails.email} <br />
-            Mobile Number : {userDetails.mobileNumber}
-          </Typography>
-        </CardContent>
-        {/* <CardActions>
-          <IconButton>
-            <ShoppingCartIcon />
-          </IconButton>
-          <IconButton>
-            <AddCircleOutlineIcon />
-          </IconButton>
-        </CardActions> */}
+      <Card
+        className={classes.card}
+        onClick={openItemShowHandler}
+        style={{ cursor: 'pointer' }}
+      >
+        <div className='card-media'>
+          <img
+            className='card-image'
+            src={`http://localhost:3001/${details.image}`}
+            alt=''
+          />
+        </div>
+        <div className='details-container'>
+          <CardHeader
+            title={details.itemName}
+            subheader={shopDetails.shopName}
+          />
+          <CardContent>
+            <Typography variant='body2' color='textSecondary' component='p'>
+              {details.description}
+            </Typography>
+            <Typography variant='body2' color='textSecondary' component='p'>
+              {details.unitPrice} LKR
+            </Typography>
+          </CardContent>
+        </div>
       </Card>
     </>
   );

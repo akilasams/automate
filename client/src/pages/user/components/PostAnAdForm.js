@@ -245,9 +245,9 @@ const PostAnAdForm = (props) => {
     formData.append('year', data.year);
     formData.append('country', data.country);
     formData.append('image', data.image);
-    for (var value of formData.values()) {
-      console.log(value);
-    }
+    // for (var value of formData.values()) {
+    //   console.log(value);
+    // }
     axios
       .post(`http://localhost:3001/shop/addItem/${user.id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -382,6 +382,8 @@ const PostAnAdForm = (props) => {
               label='Description'
               name='description'
               variant='filled'
+              multiline
+              rows={4}
               onChange={formik.handleChange}
               error={
                 formik.touched.description && Boolean(formik.errors.description)

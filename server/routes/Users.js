@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Users, Shops } = require('../models');
+const { Users, Shops, Carts } = require('../models');
 const bcrypt = require('bcrypt');
 const { sign } = require('jsonwebtoken');
 const { validateToken } = require('../middlewares/AuthMiddleware');
@@ -8,7 +8,7 @@ const { validateToken } = require('../middlewares/AuthMiddleware');
 router.post('/regCustomer', async (req, res) => {
   const { firstName, lastName, mobileNumber, address, email, password } =
     req.body;
-  bcrypt.hash(password, 10).then((hash) => {
+  await bcrypt.hash(password, 10).then((hash) => {
     Users.create({
       firstName: firstName,
       lastName: lastName,
@@ -17,6 +17,10 @@ router.post('/regCustomer', async (req, res) => {
       address: address,
       email: email,
       password: hash,
+    }).then((user) => {
+      Carts.create({
+        userId: user.id,
+      });
     });
     res.json('Success');
   });
