@@ -16,6 +16,10 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
 import Modal from './Modal';
+import PostAnAdForm from '../../../pages/user/components/PostAnAdForm';
+// import axios from 'axios';
+// import { useEffect } from 'react';
+// import BeforeSignUp from '../../../pages/user/components/BeforeSignUp';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -76,6 +80,10 @@ const useStyles = makeStyles((theme) => {
     avatar: {
       marginLeft: theme.spacing(2),
     },
+    // buttonSubmit: {
+    //   margin: 7,
+    //   width: '500px',
+    // },
   };
 });
 
@@ -121,6 +129,7 @@ const MainNav = () => {
     setAnchorEl(null);
     localStorage.removeItem('accessToken');
     setAuthState(false);
+    history.push('/');
   };
 
   const menuItems = [
@@ -165,9 +174,7 @@ const MainNav = () => {
               activeClassName={classes.active}
               key={listItem.text}
             >
-              <ListItem
-                className={classes.listitem}
-              >
+              <ListItem className={classes.listitem}>
                 <ListItemText primary={listItem.text} />
               </ListItem>
             </NavLink>
@@ -199,27 +206,13 @@ const MainNav = () => {
           </div>
         ) : (
           <React.Fragment>
-            <Modal
+            {/* <Modal
               show={showPostAd}
               onCancel={closePostAdHandler}
               header='Post An Ad'
-              // contentClass='place-item__modal-content'
-              // footerClass='place-item__modal-actions'
-              footer={
-                <Button
-                  className={classes.postAdButton}
-                  color='primary'
-                  variant='contained'
-                  onClick={closePostAdHandler}
-                >
-                  Publish Ad
-                </Button>
-              }
             >
-              <div className='modal-form-container'>
-                <h2>THE FORM</h2>
-              </div>
-            </Modal>
+              <PostAnAdForm />
+            </Modal> */}
             <div className={classes.navlinks}>
               <Button
                 className={classes.postAdButton}
@@ -228,7 +221,10 @@ const MainNav = () => {
                 onClick={openPostAdHandler}
                 disableElevation
               >
-                <Link to='' style={{ textDecoration: 'none', color: '#fff' }}>
+                <Link
+                  to='/PostAnAd'
+                  style={{ textDecoration: 'none', color: '#fff' }}
+                >
                   Post an Ad
                 </Link>
               </Button>

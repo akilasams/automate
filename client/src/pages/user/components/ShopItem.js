@@ -1,5 +1,6 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
+import { Link, useHistory } from 'react-router-dom';
 import { CardActions, IconButton, Typography } from '@material-ui/core';
 import { CardHeader, CardMedia, CardContent } from '@material-ui/core';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
@@ -9,6 +10,8 @@ import axios from 'axios';
 import Modal from '../../../shared/components/UIElements/Modal';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
+import { useContext } from 'react';
+import { AuthContext } from '../../../helpers/AuthContext';
 
 import './ShopItem.css';
 
@@ -25,21 +28,20 @@ const useStyles = makeStyles((theme) => {
 
 const ShopItem = (props) => {
   const classes = useStyles();
+  const history = useHistory();
   const { details } = props;
+  const { user } = useContext(AuthContext);
 
   const [userDetails, setUserDetails] = useState({});
   const [shopDetails, setShopDetails] = useState({});
 
   const [itemShow, setitemShow] = useState(false);
 
-  const openItemShowHandler = () => setitemShow(true);
-  const closeItemShowHandler = () => setitemShow(false);
-
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/user/byId/${details.UserId}`)
+      .get(`http://localhost:3001/user/byId/${details.userId}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setUserDetails(res.data);
       })
       .catch((err) => {
@@ -49,13 +51,30 @@ const ShopItem = (props) => {
     axios
       .get(`http://localhost:3001/shop/byId/${details.shopId}`)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setShopDetails(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  const openItemShowHandler = () => setitemShow(true);
+  const closeItemShowHandler = () => {
+    const data = {
+      itemId: details.id,
+      userId: user.id,
+    };
+    axios
+      .post(`http://localhost:3001/shop/placeOrder`, data)
+      .then((res) => {
+        history.push({ pathname: '/PaymentForm', state: res.data });
+        setitemShow(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
@@ -84,8 +103,9 @@ const ShopItem = (props) => {
           </React.Fragment>
         }
       >
-        <div className='img-container'>
-          <img src='./images/Vehicle-Repair.jpg' alt='' />
+        {/* <div className='item-container'> */}
+        <div className='modal-img-container'>
+          <img src={`http://localhost:3001/${details.image}`} alt='' />
         </div>
         <div className='content-container'>
           {shopDetails.shopName} <br />
@@ -95,6 +115,7 @@ const ShopItem = (props) => {
           Email : {userDetails.email} <br />
           Mobile Number : {userDetails.mobileNumber}
         </div>
+        {/* </div> */}
       </Modal>
       <Card onClick={openItemShowHandler} style={{ cursor: 'pointer' }}>
         <CardHeader title={details.itemName} subheader={shopDetails.shopName} />

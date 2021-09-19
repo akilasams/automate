@@ -1,15 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
   const ShopItems = sequelize.define('ShopItems', {
-    name: {
+    itemName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    price: {
+    unitPrice: {
       type: DataTypes.DOUBLE(8, 2),
+      allowNull: false,
+    },
+    modelNo: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     quantity: {
@@ -17,22 +17,53 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     condition: {
-      type: DataTypes.ENUM('new','used'),
+      type: DataTypes.STRING,
+      // type: DataTypes.ENUM('Brand New', 'Used'),
       allowNull: false,
     },
-    category: {
-      type: DataTypes.ENUM('Accessories','Air Condition Parts', 'Alloy Wheels', 'Audio/Video/Sound Systems', 'Batteries', 'Beading and Rubber Mounts', 'Break System', 'Cables',
-      'Electrical Parts', 'Engine', 'Engine Cooling System', 'Exhaust and Silencer', 'External Body Parts', 'Filters', 'Gear box and Transmission system', 'Hose and Clips',
-      'Hybrid Parts', 'Interior Body Parts', 'Lamps and Signal Lights', 'Fluid and Lubricants', 'Mirrors and Glasses', 'Nuts and Bolts',
-      'Sensors', 'Seats', 'Steering Wheels', 'Switches and controls', 'Tyres and Rims', 'Undercarriage Parts', 'Other'),
-      allowNull: false,
-    },
-
-    vehicleModel: {
+    description: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-   
+    // category: {
+    //   type: DataTypes.ENUM(
+    //     'Accessories',
+    //     'Air Condition Parts',
+    //     'Alloy Wheels',
+    //     'Audio/Video/Sound Systems',
+    //     'Batteries',
+    //     'Beading and Rubber Mounts',
+    //     'Brake System',
+    //     'Cables',
+    //     'Electrical Parts',
+    //     'Engine',
+    //     'Engine Cooling System',
+    //     'Exhaust and Silencer',
+    //     'External Body Parts',
+    //     'Filters',
+    //     'Gear box and Transmission system',
+    //     'Hose and Clips',
+    //     'Hybrid Parts',
+    //     'Interior Body Parts',
+    //     'Lamps and Signal Lights',
+    //     'Fluid and Lubricants',
+    //     'Mirrors and Glasses',
+    //     'Nuts and Bolts',
+    //     'Sensors',
+    //     'Seats',
+    //     'Steering Wheels',
+    //     'Switches and controls',
+    //     'Tyres and Rims',
+    //     'Undercarriage Parts',
+    //     'Other'
+    //   ),
+    //   allowNull: false,
+    // },
+
+    category: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     year: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -41,12 +72,30 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    
-   photo1: {
-    type: DataTypes.BLOB,
-    allowNUll: false,
-  }
+    image: {
+      type: DataTypes.STRING,
+      allowNUll: true,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    shopId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   });
+
+  ShopItems.associate = (models) => {
+    ShopItems.belongsTo(models.Users, {
+      foreignKey: 'userId',
+      onDelete: 'cascade',
+    });
+    ShopItems.belongsTo(models.Shops, {
+      foreignKey: 'shopId',
+      onDelete: 'cascade',
+    });
+  };
 
   return ShopItems;
 };

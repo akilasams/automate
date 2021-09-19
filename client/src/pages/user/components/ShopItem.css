@@ -1,4 +1,17 @@
-.img-container {
-  width: 50%;
+.item-container {
+  display: flex;
+  width: 80%;
+}
+
+.modal-img-container {
+  width: 30%;
   margin-right: 20px;
+}
+
+.modal-img-container img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.content-container {
 }

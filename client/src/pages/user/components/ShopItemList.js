@@ -19,7 +19,7 @@ const ShopItemList = () => {
     axios
       .get('http://localhost:3001/shop/getItems')
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setShopItems(res.data);
       })
       .catch((err) => {

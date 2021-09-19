@@ -17,8 +17,13 @@ import AuthForm from './pages/user/AuthForm';
 import { AuthContext } from './helpers/AuthContext';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+<<<<<<< HEAD
 import Cartform from './Customer/AddtoCart/Cartform';
 import SelectQ from './pages/user/components/SelectQ';
+=======
+import PostAnAdForm from './pages/user/components/PostAnAdForm';
+import PaymentForm from './pages/user/components/PaymentForm';
+>>>>>>> improvements
 
 const theme = createTheme({
   palette: {
@@ -67,10 +72,12 @@ function App() {
               <Route path='/Cart' component={Cart} />
               <Route path='/Cartform' component={Cartform} />
               <Route path='/SelectQ' component={SelectQ} />
+              <Route path='/PostAnAd' component={PostAnAdForm} />
               <Route path='/Login' component={AuthForm} />
               <Route path='/SignUpShop' component={AuthForm} />
               <Route path='/SignUpIndi' component={AuthForm} />
               <Route path='/BeforeSignUp' component={AuthForm} />
+              <Route path='/PaymentForm' component={PaymentForm} />
               <Route exact path='/Admin' component={Dashboard} />
               <Route path='/Admin/Customers' component={Customers} />
               <Route path='/Admin/Advertisements' component={Advertisements} />

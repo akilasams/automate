@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { shopRegisterSchema } from '../../../validations/UserValidation';
 import axios from 'axios';
 import Modal from '../../../shared/components/UIElements/Modal';
+import { useState } from 'react';
 // import { Hidden } from '@material-ui/core';
 
 // import FileUpload from '../../../shared/components/FormElements/FileUpload';
@@ -49,8 +50,8 @@ const initialValues = {
 };
 
 function SignUpFormShop(props) {
-  const [serviceType, setServiceType] = React.useState('Spare Part Seller');
-  const [showMessage, setShowMessage] = React.useState(false);
+  const [serviceType, setServiceType] = useState('Spare Part Seller');
+  const [showMessage, setShowMessage] = useState(false);
 
   const openMessageHandler = () => setShowMessage(true);
   const closeMessageHandler = () => setShowMessage(false);
@@ -78,6 +79,7 @@ function SignUpFormShop(props) {
       <Modal
         show={showMessage}
         header='Congratulations!'
+        onCancel={closeMessageHandler}
         footer={
           <Button
             className={classes.gotToHomeButton}
