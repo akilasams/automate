@@ -1,14 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const { Contact } = require('../models');
+const { Contacts, ContactItems } = require('../models');
 
 
-router.post('/contact', async (req, res) => {
-  const { name, email, message} = req.body;
-  //bcrypt.hash(password, 10).then((hash) => {
-    await Contact.create({name: name, email: email, message: message});
-    res.json('SUCCESS');
+router.post('/addmessage/:userId', async (req, res) => { 
+  const userId = req.params.userId;
+  const { name, email, message } = req.body;
+
+  const { id } = await Contacts.findOne({ where: { userId: userId } });
+
+  const newContactItem = await ContactItems.create({
+    name: name,
+    contactId: id,
+    email: email,
+    message: message,
+    userId: userId,
   });
+  res.json(newContactItem);
+});
 //});
 
 //router.post('/login', async (req, res) => {

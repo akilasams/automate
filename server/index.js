@@ -13,7 +13,7 @@ const usersRouter = require('./routes/Users');
 app.use('/user', usersRouter);
 const shopsRouter = require('./routes/Shops');
 app.use('/shop', shopsRouter);
-const ContactRouter = require('./routes/Contact');
+const ContactRouter = require('./routes/Contacts');
 app.use('/contactus', ContactRouter);
 const AdsRouter = require('./routes/ShopItems');
 app.use('/ads', AdsRouter);

@@ -14,7 +14,8 @@ import { useFormik } from 'formik';
 import axios from 'axios';
 import Modal from '../../shared/components/UIElements/Modal';
 import { useState } from 'react';
-
+import { useContext } from 'react';
+import { AuthContext } from '../../helpers/AuthContext';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,17 +60,19 @@ const initialValues = {
 
 
 export default function ContactUs() {
+  const { user } = useContext(AuthContext);
   const [showMessage, setShowMessage] = useState(false);
 
   const openMessageHandler = () => setShowMessage(true);
   const closeMessageHandler = () => setShowMessage(false);
 
   const onSubmit = (data) => {
-    axios.post('http://localhost:3001/contactus/contact', data).then(() => {
+    axios.post(`http://localhost:3001/contactus/addmessage/${user.id}`, data).then(() => {
+      
       setShowMessage(true);
-      openMessageHandler();
+       openMessageHandler();
   });
-  };
+};
 
   const classes = useStyles();
   const formik = useFormik({
