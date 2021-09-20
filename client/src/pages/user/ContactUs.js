@@ -12,6 +12,9 @@ import Paper from '@material-ui/core/Paper';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import Modal from '../../shared/components/UIElements/Modal';
+import { useState } from 'react';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -53,13 +56,21 @@ const initialValues = {
   
 };
 
-const onSubmit = (data) => {
-  axios.post('http://localhost:3001/contactus/contact', data).then(() => {
-    console.log(data);
-  });
-};
+
 
 export default function ContactUs() {
+  const [showMessage, setShowMessage] = useState(false);
+
+  const openMessageHandler = () => setShowMessage(true);
+  const closeMessageHandler = () => setShowMessage(false);
+
+  const onSubmit = (data) => {
+    axios.post('http://localhost:3001/contactus/contact', data).then(() => {
+      setShowMessage(true);
+      openMessageHandler();
+  });
+  };
+
   const classes = useStyles();
   const formik = useFormik({
     initialValues, //userRegisterSchema,
@@ -67,6 +78,24 @@ export default function ContactUs() {
 });
 
   return (
+    <>
+    <Modal
+    show={showMessage}
+    header=' Success!'
+    footer={
+      <Button
+        className={classes.gotToHomeButton}
+        color='primary'
+        variant='contained'
+        onClick={closeMessageHandler}
+      >  Close
+      </Button>
+    }
+  >
+    <div className='modal-msg-container'>
+      <h2>Your Message has been sent!</h2>
+    </div>
+  </Modal>
     <div>
       <Typography component='h1' variant='h5' style={{ color: '#42207A' }}>
         <b> GET IN TOUCH WITH US</b>
@@ -162,4 +191,7 @@ export default function ContactUs() {
       </Grid>
     </div>
   );
-}
+  </>
+  )
+};
+
