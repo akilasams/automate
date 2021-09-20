@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Users, Shops, Carts } = require('../models');
+const { Users, Shops, Carts, Contacts } = require('../models');
 const bcrypt = require('bcrypt');
 const { sign } = require('jsonwebtoken');
 const { validateToken } = require('../middlewares/AuthMiddleware');
@@ -19,6 +19,9 @@ router.post('/regCustomer', async (req, res) => {
       password: hash,
     }).then((user) => {
       Carts.create({
+        userId: user.id,
+      });
+      Contacts.create({
         userId: user.id,
       });
     });
@@ -67,6 +70,9 @@ router.post('/regShop', async (req, res) => {
       Shops.create({
         shopName: shopName,
         serviceType: serviceType,
+        userId: user.id,
+      });
+      Contacts.create({
         userId: user.id,
       });
     });
