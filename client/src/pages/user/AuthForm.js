@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
+
 import SignUpFormShop from './components/SignUpFormShop';
 import SignUpFormIndi from './components/SignUpFormIndi';
 import BeforeSignUp from './components/BeforeSignUp';
@@ -23,6 +24,7 @@ function AuthForm() {
   let signUpShop = location.pathname.match('/SignUpShop');
   let signUpIndi = location.pathname.match('/SignUpIndi');
 
+
   return (
     <div className={classes.root}>
       <div className='img-container'>
@@ -32,6 +34,7 @@ function AuthForm() {
       {signUpShop && <SignUpFormShop />}
       {signUpIndi && <SignUpFormIndi />}
       {beforeSignUp && <BeforeSignUp />}
+      
     </div>
   );
 }

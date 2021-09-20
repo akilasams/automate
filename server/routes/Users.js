@@ -25,6 +25,22 @@ router.post('/regCustomer', async (req, res) => {
     res.json('Success');
   });
 });
+router.post('/regAdmin', async (req, res) => {
+  const { firstName, lastName, mobileNumber, address, email, password } =
+    req.body;
+  bcrypt.hash(password, 10).then((hash) => {
+    Users.create({
+      firstName: firstName,
+      lastName: lastName,
+      mobileNumber: mobileNumber,
+      userRole: 'Admin',
+      address: address,
+      email: email,
+      password: hash,
+    });
+    res.json('Success');
+  });
+});
 
 router.post('/regShop', async (req, res) => {
   const {

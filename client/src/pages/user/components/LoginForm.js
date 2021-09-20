@@ -37,7 +37,7 @@ function LoginForm() {
       } else {
         localStorage.setItem('accessToken', response.data);
         setAuthState(true);
-        if (user.userRole === 'Admin') {
+        if (user.userRole == 'Admin') {
           history.push('/Admin');
         } else {
           history.push('/');

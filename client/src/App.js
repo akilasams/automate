@@ -21,6 +21,8 @@ import Cartform from './Customer/AddtoCart/Cartform';
 import SelectQ from './pages/user/components/SelectQ';
 import PostAnAdForm from './pages/user/components/PostAnAdForm';
 import PaymentForm from './pages/user/components/PaymentForm';
+import SignUpAdmin from './pages/user/components/SignUpAdmin';
+
 
 const theme = createTheme({
   palette: {
@@ -69,6 +71,7 @@ function App() {
               <Route path='/ContactUs' component={ContactUs} />
               <Route path='/Blog' component={Blog} />
               <Route path='/Shop' component={Shop} />
+              <Route path = '/SignUpAdmin' component={SignUpAdmin} />
               <Route path='/Payment' component={Payment} />
               <Route path='/Cart' component={Cart} />
               <Route path='/Cartform' component={Cartform} />
