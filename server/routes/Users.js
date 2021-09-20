@@ -5,6 +5,11 @@ const bcrypt = require('bcrypt');
 const { sign } = require('jsonwebtoken');
 const { validateToken } = require('../middlewares/AuthMiddleware');
 
+router.get ('/', async(req,res) =>{
+  const listofUsers = await Users.findAll();
+  res.json(listofUsers);
+});
+
 router.post('/regCustomer', async (req, res) => {
   const { firstName, lastName, mobileNumber, address, email, password } =
     req.body;
