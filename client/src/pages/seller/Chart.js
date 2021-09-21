@@ -5,14 +5,12 @@ import {
   Chart,
   PieSeries,
 } from '@devexpress/dx-react-chart-material-ui';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import CssBaseline from '@material-ui/core/CssBaseline'; 
 import { Container } from '@material-ui/core'; 
 import { makeStyles } from '@material-ui/core/styles'; 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Brightness1Icon from '@material-ui/icons/Brightness1';
 import IconButton from '@material-ui/core/IconButton';
@@ -63,7 +61,7 @@ export default class Demo extends React.PureComponent {
       <CardActionArea>
         <CardContent>
         <Typography gutterBottom variant="subtitle1" style={{fontSize: 20, color: '	#000000'}}>
-                <b>Spare Parts Sold</b>
+                <b>Spare Parts Sold - Monthly</b>
             <Typography gutterBottom style={{fontSize: 18, color: '	#006400'}}>
             <IconButton>
                < Brightness1Icon style = {{color:' #ff69b4 ', fontSize: 23 }} />
