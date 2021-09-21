@@ -103,9 +103,9 @@ router.post('/login', async (req, res) => {
     }
   })
 
-  if (shop.regApproval === false) {
-    res.json({ error: "Shop registration not approved" });
-  }
+  // if (shop.regApproval === false) {
+  //   res.json({ error: "Shop registration not approved" });
+  // }
 
   bcrypt.compare(password, user.password).then((match) => {
     if (!match) res.json({ error: 'Wrong Username or Password' });
