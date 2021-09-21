@@ -8,6 +8,9 @@ import Shop from './pages/user/Shop';
 import Cart from './Customer/Cart/Cart';
 import Payment from './Customer/Payment/Payment';
 import Dashboard from './pages/admin/Dashboard';
+import SellerDashboard from './pages/seller/SellerDashboard';
+import Orders from './pages/seller/SellerOrders';
+import SellerAds from './pages/seller/SellerAds';
 import Customers from './pages/admin/Customers';
 import Advertisements from './pages/admin/Advertisements';
 import Registrations from './pages/admin/Registrations';
@@ -19,6 +22,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cartform from './Customer/AddtoCart/Cartform';
 import SelectQ from './pages/user/components/SelectQ';
+import Title from './pages/seller/Title';
+import Chart from './pages/seller/Chart';
 
 const theme = createTheme({
   palette: {
@@ -65,13 +70,18 @@ function App() {
               <Route path='/Shop' component={Shop} />
               <Route path='/Payment' component={Payment} />
               <Route path='/Cart' component={Cart} />
-              <Route path='/Cartform' component={Cartform} />
+              <Route path='/Cart' component={Cart} />
+              <Route path='/seller/Title' component={Title} />
+              <Route path='/seller/Chart' component={Chart} />
               <Route path='/SelectQ' component={SelectQ} />
               <Route path='/Login' component={AuthForm} />
               <Route path='/SignUpShop' component={AuthForm} />
               <Route path='/SignUpIndi' component={AuthForm} />
               <Route path='/BeforeSignUp' component={AuthForm} />
               <Route exact path='/Admin' component={Dashboard} />
+              <Route exact path='/Seller' component={SellerDashboard} />
+              <Route path='/seller/SellerOrder' component={Orders} />
+              <Route path='/seller/SellerAds' component={SellerAds} />
               <Route path='/Admin/Customers' component={Customers} />
               <Route path='/Admin/Advertisements' component={Advertisements} />
               <Route path='/Admin/Registrations' component={Registrations} />

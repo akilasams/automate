@@ -4,7 +4,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
-import ShopItem from './ShopItem';
+import ShopItem from  '../admin/ShopItem';
+import SellerItems from './SellerItems';
 
 import Grid from '@material-ui/core/Grid';
 // import { Container } from '@material-ui/core';
@@ -31,7 +32,7 @@ const ShopItemList = () => {
     <Grid container spacing={2}>
       {shopItems.map((shopItem) => (
         <Grid item xs={12} md={6} sm={4} lg={3} key={shopItem.id}>
-          <ShopItem details={shopItem} />
+          <SellerItems details={shopItem} />
         </Grid>
       ))}
     </Grid>

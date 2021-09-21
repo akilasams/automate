@@ -10,6 +10,10 @@ router.get ('/', async(req,res) =>{
   res.json(listofUsers);
 });
 
+router.get ('/getCount', async(req,res) =>{
+  const countofUsers = await Users.count();
+  res.json(countofUsers);
+});
 router.post('/regCustomer', async (req, res) => {
   const { firstName, lastName, mobileNumber, address, email, password } =
     req.body;

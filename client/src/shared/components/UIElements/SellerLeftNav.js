@@ -3,7 +3,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
-import { PostAdd, People, Storefront, Book } from '@material-ui/icons';
+import { PostAdd, People, Storefront, Book, EventNote } from '@material-ui/icons';
 import { List } from '@material-ui/core';
 import { ListItem } from '@material-ui/core';
 import { ListItemIcon } from '@material-ui/core';
@@ -13,6 +13,7 @@ import { AppBar } from '@material-ui/core';
 import { Toolbar } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
+
 
 const drawerWidth = 220;
 
@@ -45,27 +46,21 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-const AdminLeftNav = (props) => {
+const SellerLeftNav = (props) => {
   const classes = useStyles();
   const history = useHistory(); //To link ListItems
   const location = useLocation(); //To Track Current Page
 
   const menuItems = [
-  
     {
-      text: 'Customers',
-      icon: <People />,
-      path: '/Admin/Customers',
+      text: 'Dashboard',
+      icon: <DashboardIcon />,
+      path: '/Seller',
     },
     {
       text: 'Advertisements',
       icon: <PostAdd />,
-      path: '/Admin/Advertisements',
-    },
-    {
-      text: 'Registrations',
-      icon: <Storefront />,
-      path: '/Admin/Registrations',
+      path: '/seller/SellerAds',
     },
   ];
 
@@ -74,9 +69,9 @@ const AdminLeftNav = (props) => {
       <AppBar className={classes.appbar} elevation={0}>
         <Toolbar>
           <Typography className={classes.welcome}>
-            Welcome to Admin Dashboard
+            Welcome to Sellers Dashboard
           </Typography>
-          <Typography>Admin Name</Typography>
+          <Typography>Shop Name</Typography>
           <Avatar src='/images/guy.jpg' className={classes.avatar} />
         </Toolbar>
       </AppBar>
@@ -89,7 +84,7 @@ const AdminLeftNav = (props) => {
       >
         <div>
           <Typography variant='h5' className={classes.title}>
-            Akila
+            Seller
           </Typography>
         </div>
 
@@ -120,4 +115,4 @@ const AdminLeftNav = (props) => {
   // );
 };
 
-export default AdminLeftNav;
+export default SellerLeftNav;

@@ -8,6 +8,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import axios from "axios";
 import { useEffect, useState } from 'react';
+import Sales from './Sales.js';
+import Grid from '@material-ui/core/Grid';
+
 
 const bull = (
   <Box
@@ -27,23 +30,22 @@ export default function Dashboard() {
        
     });
   }, [])
+
+  const [countofUsers, setcountofUsers] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/user/getCount").then((response) => {
+       setcountofUsers(response.data);
+       
+    });
+  }, [])
+
   return <div className="users">{listofUsers.map((value, key) => {
     return (
-       <div className="user">
-      <Card sx={{ minWidth: 100}}>
-      <CardContent>
-      <Typography variant="h5" color="text.secondary" gutterBottom>
-      Customers
-      </Typography>
-      </CardContent>
-      <CardActions>
-      <Button size="small">Learn More</Button>
-      </CardActions>
-      </Card>
-      <Typography component="h6" variant="h6" align="left" style={{ color: 'black' }}>First Name:  {value.firstName}</Typography>
+       
+
+      <Sales/>
       
-      <br></br>
-      </div>
   );
   })} 
   </div>  

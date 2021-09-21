@@ -9,7 +9,8 @@ module.exports = (sequelize, DataTypes) => {
     //   allowNull: true,
     // },
     serviceType: {
-      type: DataTypes.ENUM('Spare Part Seller', 'Service Center'),
+      type: DataTypes.STRING,
+      // type: DataTypes.ENUM('Spare Part Seller', 'Service Center'),
       allowNull: true,
     },
     userId: {

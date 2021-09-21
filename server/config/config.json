@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "Root123@123",
+    "password": "ais@123321",
     "database": "automate_db",
     "host": "localhost",
     "dialect": "mysql"
