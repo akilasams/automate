@@ -64,7 +64,7 @@ export default function Dashboard() {
       <Card sx={{ minWidth: 80,  background: '#663399', top:'8000'}}>
       <CardContent >
       <Typography variant="h5" color="white" gutterBottom>
-      My Ads
+      My Advertisements
       </Typography>
       </CardContent>
       <CardActions>
