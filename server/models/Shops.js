@@ -17,6 +17,16 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    file: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    regApproval:{
+    type: DataTypes.BOOLEAN,
+    default: false,
+    allowNUll: true,
+ 
+    },
   });
 
   Shops.associate = (models) => {

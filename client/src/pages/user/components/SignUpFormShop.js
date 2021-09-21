@@ -8,10 +8,11 @@ import { Link } from 'react-router-dom';
 import { shopRegisterSchema } from '../../../validations/UserValidation';
 import axios from 'axios';
 import Modal from '../../../shared/components/UIElements/Modal';
-import { useState } from 'react';
+import { useState, useRef, useEffect  } from 'react';
 // import { Hidden } from '@material-ui/core';
+import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
-// import FileUpload from '../../../shared/components/FormElements/FileUpload';
+import '../../../shared/components/FormElements/FileUpload.css';
 
 const serviceTypes = [
   {
@@ -35,6 +36,15 @@ const useStyle = makeStyles({
     height: '40px',
     width: '120px',
   },
+  input:{
+    display: 'none',
+
+  },
+  inputButton: {
+    margin: 7,
+    width: '350px',
+    height: '55px',
+  },
 });
 
 const initialValues = {
@@ -45,6 +55,7 @@ const initialValues = {
   address: '',
   serviceType: '',
   email: '',
+  file: '',
   password: '',
   confirmPassword: '',
 };
@@ -53,11 +64,38 @@ function SignUpFormShop(props) {
   const [serviceType, setServiceType] = useState('Spare Part Seller');
   const [showMessage, setShowMessage] = useState(false);
 
+  const [file, setFile] = useState();
+  const [previewUrl, setPreviewUrl] = useState();
+
+  const filePickerRef = useRef();
+
   const openMessageHandler = () => setShowMessage(true);
   const closeMessageHandler = () => setShowMessage(false);
 
+  const handleServiceTypeChange = (event) => {
+    setServiceType(event.target.value);
+  };
+
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+    formik.setFieldValue('file', event.target.files[0]);
+  };
+
   const onSubmit = (data) => {
-    axios.post('http://localhost:3001/user/regShop', data).then(() => {
+    const formData = new FormData();
+    formData.append('firstName', data.firstName);
+    formData.append('lastName', data.lastName);
+    formData.append('shopName', data.shopName);
+    formData.append('mobileNumber', data.mobileNumber);
+    formData.append('address', data.address);
+    formData.append('serviceType', data.serviceType);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
+    formData.append('file', data.file);
+    // for (var value of formData.values()) {
+    //   console.log(value);
+    // }
+    axios.post('http://localhost:3001/user/regShop', formData).then(() => {
       setShowMessage(true);
       openMessageHandler();
     });
@@ -70,15 +108,26 @@ function SignUpFormShop(props) {
     onSubmit,
   });
 
-  const handleServiceTypeChange = (event) => {
-    setServiceType(event.target.value);
-  };
+ 
+  useEffect(() => {
+    if (!file) {
+      return;
+    }
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreviewUrl(fileReader.result);
+    };
+    fileReader.readAsDataURL(file);
+  }, [file]);
 
+  const uploadHandler = () => {
+    filePickerRef.current.click();
+  };
   return (
     <>
       <Modal
         show={showMessage}
-        header='Congratulations!'
+        header='Success!'
         onCancel={closeMessageHandler}
         footer={
           <Button
@@ -94,11 +143,14 @@ function SignUpFormShop(props) {
           </Button>
         }
       >
-        <div className='modal-msg-container'>
-          <h2>Registration Succesful!</h2>
+        <div className='modal-msg'>
+          <h2 align='center'>Your Registration is submitted for review. <br></br>
+          You will be able to login after it is confirmed.<br></br>
+          <div className='msg'>We will notify you through the email provided when your registration is approved or not. This may take upto few hours.</div></h2>
+          
         </div>
       </Modal>
-      <form className='form-container' onSubmit={formik.handleSubmit}>
+      <form  className='form-container' encType='multipart/form-data' onSubmit={formik.handleSubmit}>
         {/* <Field id='auth-input' name='email' placeholder='Email' />
           <Field id='auth-input' name='password' placeholder='Password' />
           <Button color='primary' variant='contained'>
@@ -200,6 +252,34 @@ function SignUpFormShop(props) {
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={formik.touched.email && formik.errors.email}
         />
+        <input
+              // accept='image/*'
+              ref={filePickerRef}
+              name='file'
+              className={classes.input}
+              id='contained-button-file'
+              // multiple
+              onChange={handleFileChange}
+              type='file'
+            />
+            <label htmlFor='contained-button-file'>
+              <div className='image-upload center'>
+                 <div className='file-upload__preview'>
+                  {previewUrl && <img src={previewUrl} alt='Preview' />}
+                  {!previewUrl && <p>Please upload a scanned copy of your Business Registration Document</p>}
+                </div> 
+                <Button
+                  startIcon={<CloudUploadIcon />}
+                  className={classes.inputButton}
+                  onClick={uploadHandler}
+                  variant='outlined'
+                  color='primary'
+                  component='span'
+                >
+                  Upload Document
+                </Button>
+              </div>
+            </label>
         <TextField
           className={classes.field}
           id='password'

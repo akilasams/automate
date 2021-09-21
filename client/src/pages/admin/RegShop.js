@@ -12,9 +12,9 @@ import Modal from '../../shared/components/UIElements/Modal';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { useContext } from 'react';
-import { AuthContext } from '../../../src/helpers/AuthContext';
+import { AuthContext } from '../../helpers/AuthContext';
 
-import './css/ShopItem.css';
+import './css/RegShop.css';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -33,15 +33,15 @@ const useStyles = makeStyles((theme) => {
       paddingTop: '56.25%', // 16:9
     },
     card: {
+      display: 'flex',
       marginTop: '50px',
       marginLeft: '50px',
-      display: 'flex',
       // flexFlow: 'column',
     },
   };
 });
 
-const ShopItem = (props) => {
+const RegShop = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { details } = props;
@@ -49,7 +49,7 @@ const ShopItem = (props) => {
 
   const [userDetails, setUserDetails] = useState({});
   const [shopDetails, setShopDetails] = useState({});
-  const [quantity, setQuantity] = useState(1);
+  //const [quantity, setQuantity] = useState(1);
 
   const [itemShow, setitemShow] = useState(false);
 
@@ -59,22 +59,21 @@ const ShopItem = (props) => {
       .then((res) => {
         // console.log(res.data);
         setUserDetails(res.data);
+        console.log("user details", res.data)
       })
       .catch((err) => {
         console.log(err);
       });
 
     axios
-      .get(`http://localhost:3001/shop/byId/${details.shopId}`)
+      .get(`http://localhost:3001/shop/byId/${details.id}`)
       .then((res) => {
-        // console.log(res.data);
         setShopDetails(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
   const [showMessage, setShowMessage] = useState(false);
 
   const openMessageHandler = () => setShowMessage(true);
@@ -86,7 +85,7 @@ const ShopItem = (props) => {
 
   const approve = () => {
     axios
-      .put(`http://localhost:3001/shop/approveItem/${details.id}`, { approval: true })
+      .put(`http://localhost:3001/shop/approveShop/${details.id}`, { regApproval: true })
       .then((res) => {
         console.log(res.data);
         setShowMessage(true);
@@ -114,7 +113,7 @@ const ShopItem = (props) => {
   //   });
 
   return (
-    <><Modal
+    <> <Modal
     show={showMessage}
     header='Approval complete!'
     onCancel={closeMessageHandler}
@@ -135,40 +134,38 @@ const ShopItem = (props) => {
     
     </div>
   </Modal>
+
       <Card
         className={classes.card}
         onClick={openItemShowHandler}
         style={{ cursor: 'pointer' }}
       >
-        <div className='card-media'>
-          <img
-            className='card-image'
-            src={`http://localhost:3001/${details.image}`}
-            alt=''
-          />
-        </div>
+
         <div className='details-container'>
           <CardHeader
-            title={details.itemName}
-            subheader={shopDetails.shopName}
+            title={shopDetails.shopName}
+          // subheader={shopDetails.shopName}
           />
           <CardContent>
             <Typography variant='body2' color='textSecondary' component='p'>
-              {details.description}
+              {userDetails.address}
             </Typography>
             <Typography variant='body2' color='textSecondary' component='p'>
-              {details.unitPrice} LKR
+              {userDetails.email}
+            </Typography>
+            <Typography variant='body2' color='textSecondary' component='p'>
+              {userDetails.mobileNumber}
             </Typography>
             <Button
-              
+
               className={classes.postAdButton}
               color='primary'
               variant='contained'
               onClick={() => approve()}
-              disabled={details.approval}
+            disabled={details.regApproval}
             >
-              Approve Ad
-              </Button>
+              Approve Registration
+            </Button>
           </CardContent>
         </div>
       </Card>
@@ -176,4 +173,4 @@ const ShopItem = (props) => {
   );
 };
 
-export default ShopItem;
+export default RegShop;
