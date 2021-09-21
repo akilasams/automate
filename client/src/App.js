@@ -22,7 +22,7 @@ import SelectQ from './pages/user/components/SelectQ';
 import PostAnAdForm from './pages/user/components/PostAnAdForm';
 import PaymentForm from './pages/user/components/PaymentForm';
 import SignUpAdmin from './pages/user/components/SignUpAdmin';
-
+import Profile from './pages/user/Profile';
 
 const theme = createTheme({
   palette: {
@@ -77,6 +77,7 @@ function App() {
               <Route path='/Cartform' component={Cartform} />
               <Route path='/SelectQ' component={SelectQ} />
               <Route path='/PostAnAd' component={PostAnAdForm} />
+              <Route path='/Profile' component={Profile} />
               <Route path='/Login' component={AuthForm} />
               <Route path='/SignUpShop' component={AuthForm} />
               <Route path='/SignUpIndi' component={AuthForm} />

@@ -21,6 +21,7 @@ import PostAnAdForm from '../../../pages/user/components/PostAnAdForm';
 // import axios from 'axios';
 // import { useEffect } from 'react';
 // import BeforeSignUp from '../../../pages/user/components/BeforeSignUp';
+import Profile  from '../../../pages/user/Profile';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -262,7 +263,9 @@ const MainNav = () => {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>My Profile</MenuItem>
+                <MenuItem onClick={handleClose}><Link to='/Profile' style={{ textDecoration: 'none', color: '#fff' }}>
+              My Profile</Link>
+              </MenuItem>
                 <MenuItem onClick={handleClose}>Settings</MenuItem>
                 <MenuItem onClick={logout}>Sign Out</MenuItem>
               </Menu>
