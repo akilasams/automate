@@ -304,7 +304,8 @@ const PostAnAdForm = (props) => {
         }
       >
         <div className='modal-msg-container'>
-          <h2>Item Added Successfully!</h2>
+          <h3>Your ad needs to be approved by the Admin before publishing. It will be available in the Shop after the Approval is complete.</h3><br></br>
+        
         </div>
       </Modal>
       <h1>Add an Item</h1>
