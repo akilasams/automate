@@ -37,9 +37,27 @@ router.post(
       shopId: id,
       userId: userId,
       image: imagePath,
+      approval: false,
     });
 
     res.json(newItem);
+  }
+);
+
+router.put(
+  '/approveItem/:itemId',
+  async (req, res) => {
+
+    const itemId = req.params.itemId;
+    console.log("item Id: ", itemId)
+    const prevItem = await ShopItems.findByPk(itemId);
+    
+    const updatedItem = await ShopItems.update(
+      { approval: true },
+      { where: { id: (prevItem.dataValues.id) } }
+    )
+
+    res.json(updatedItem);
   }
 );
 
@@ -58,6 +76,15 @@ router.post('/placeOrder', async (req, res) => {
 
 router.get('/getItems', async (req, res) => {
   const items = await ShopItems.findAll();
+  res.json(items);
+});
+
+router.get('/getShopItems', async (req, res) => {
+  const items = await ShopItems.findAll({
+    where: {
+      approval: true
+    }
+  });
   res.json(items);
 });
 
