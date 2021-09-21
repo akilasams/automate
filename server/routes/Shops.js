@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { ShopItems, Shops, Orders } = require('../models');
+const { ShopItems, Shops, Orders, OrderItems } = require('../models');
 const fileUpload = require('../middlewares/UploadMiddleware');
 // import { validateToken } from '../middlewares/AuthMiddleware';
 
@@ -44,6 +44,7 @@ router.post(
   }
 );
 
+<<<<<<< HEAD
 router.put(
   '/approveItem/:itemId',
   async (req, res) => {
@@ -63,12 +64,39 @@ router.put(
 
 router.post('/placeOrder', async (req, res) => {
   const { itemId, userId } = req.body;
-
-  const item = await ShopItems.findOne({ where: { id: itemId } });
+=======
+router.post('/buyNow', async (req, res) => {
+  const { itemId, userId, quantity, unitPrice } = req.body;
+>>>>>>> map display done
 
   const newOrder = await Orders.create({
-    amount: item.unitPrice,
+    amount: unitPrice,
     userId: userId,
+  });
+
+  const newOrderItem = await OrderItems.create({
+    quantity: quantity,
+    ShopItemId: itemId,
+    OrderId: newOrder.id,
+  });
+
+  res.json(newOrder);
+});
+
+router.post('/placeOrder', async (req, res) => {
+  const { userId, cartItemsList, total } = req.body;
+
+  const newOrder = await Orders.create({
+    amount: total,
+    userId: userId,
+  });
+
+  await cartItemsList.forEach((cartItem) => {
+    OrderItems.create({
+      quantity: cartItem.quantity,
+      ShopItemId: cartItem.itemId,
+      OrderId: newOrder.id,
+    });
   });
 
   res.json(newOrder);

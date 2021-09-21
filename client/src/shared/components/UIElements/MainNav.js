@@ -12,6 +12,7 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Map from './Map';
 import { useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
@@ -94,14 +95,13 @@ const MainNav = () => {
   const history = useHistory();
   const location = useLocation();
 
-  // const [authState, setAuthState] = useState(false);
-  const { authState, setAuthState, user } = useContext(AuthContext);
+  const { authState, setAuthState } = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [showPostAd, setShowPostAd] = useState(false);
+  const [showMap, setShowMap] = useState(false);
   const open = Boolean(anchorEl);
 
-  const openPostAdHandler = () => setShowPostAd(true);
-  const closePostAdHandler = () => setShowPostAd(false);
+  const openMapHandler = () => setShowMap(true);
+  const closeMapHandler = () => setShowMap(false);
 
   // useEffect(() => {
   //   axios
@@ -157,8 +157,30 @@ const MainNav = () => {
     return null;
   }
 
+  const coordinates = {
+    lat: 6.927079,
+    lng: 79.861244,
+  };
+
   return (
     <AppBar className={classes.appbar}>
+      <Modal
+        show={showMap}
+        header='Find Nearby Shops'
+        onCancel={closeMapHandler}
+        footer={
+          <Button
+            className={classes.gotToHomeButton}
+            color='primary'
+            variant='contained'
+            onClick={closeMapHandler}
+          >
+            Close Map
+          </Button>
+        }
+      >
+        <Map center={coordinates} zoom={16} />
+      </Modal>
       <Toolbar>
         <Button onClick={() => history.push('/')}>
           <Typography className={classes.title}>AUTOMATE</Typography>
@@ -178,7 +200,16 @@ const MainNav = () => {
             </NavLink>
           ))}
         </List>
-        {!authState ? (
+        <Button
+          className={classes.postAdButton}
+          color='primary'
+          variant='contained'
+          onClick={openMapHandler}
+          disableElevation
+        >
+          Open Map
+        </Button>
+        {!authState.status ? (
           <div>
             <Button
               className={classes.button}
@@ -212,12 +243,11 @@ const MainNav = () => {
               <PostAnAdForm />
             </Modal> */}
             <div className={classes.navlinks}>
-              {user.userRole !== 'Customer' && (
+              {authState.userRole !== 'Customer' && (
                 <Button
                   className={classes.postAdButton}
                   color='primary'
                   variant='contained'
-                  onClick={openPostAdHandler}
                   disableElevation
                 >
                   <Link
@@ -232,7 +262,7 @@ const MainNav = () => {
                 color='primary'
                 style={{ marginRight: '8px', fontWeight: 'bold' }}
               >
-                {user.firstName}
+                {authState.firstName}
               </Typography>
               <IconButton>
                 <Link to='/Cart'>

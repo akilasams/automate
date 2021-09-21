@@ -14,6 +14,7 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
+import Modal from '../../../shared/components/UIElements/Modal';
 
 import './ShopItem.css';
 
@@ -37,6 +38,10 @@ const useStyles = makeStyles((theme) => {
       display: 'flex',
       // flexFlow: 'column',
     },
+    gotToHomeButton: {
+      width: '100px',
+      margin: '10px',
+    },
   };
 });
 
@@ -48,6 +53,10 @@ const CartItem = (props) => {
 
   const quantity = details.quantity;
   const [newQuantity, setNewQuantity] = useState(quantity);
+  const [showMessage, setShowMessage] = useState(false);
+
+  const openMessageHandler = () => setShowMessage(true);
+  const closeMessageHandler = () => setShowMessage(false);
 
   const handleNewQuantity = (event) => {
     setNewQuantity(event.target.value);
@@ -60,6 +69,8 @@ const CartItem = (props) => {
 
     axios.delete(`http://localhost:3001/cart/deleteItem/${id}`).then((res) => {
       console.log('Item Deleted');
+      closeMessageHandler();
+      history.push('/Shop');
     });
   };
 
@@ -77,6 +88,28 @@ const CartItem = (props) => {
 
   return (
     <>
+      <Modal
+        show={showMessage}
+        header='Do You Want to Delete This Item?'
+        onCancel={closeMessageHandler}
+      >
+        <Button
+          className={classes.gotToHomeButton}
+          color='primary'
+          variant='contained'
+          onClick={handleDelete}
+        >
+          Yes
+        </Button>
+        <Button
+          className={classes.gotToHomeButton}
+          color='primary'
+          variant='contained'
+          onClick={closeMessageHandler}
+        >
+          No
+        </Button>
+      </Modal>
       <Card className={classes.card}>
         <div className='card-media'>
           <img
@@ -105,7 +138,7 @@ const CartItem = (props) => {
             />
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton aria-label='add to favorites' onClick={handleDelete}>
+            <IconButton aria-label='delete' onClick={openMessageHandler}>
               <DeleteIcon />
             </IconButton>
           </CardActions>

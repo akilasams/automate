@@ -206,7 +206,7 @@ const initialValues = {
 const PostAnAdForm = (props) => {
   const [category, setCategory] = useState('Accessories');
   const [condition, setCondition] = useState('Brand New');
-  const { user } = useContext(AuthContext);
+  const { authState } = useContext(AuthContext);
 
   const [image, setImage] = useState();
   const [previewUrl, setPreviewUrl] = useState();
@@ -249,7 +249,7 @@ const PostAnAdForm = (props) => {
     //   console.log(value);
     // }
     axios
-      .post(`http://localhost:3001/shop/addItem/${user.id}`, formData, {
+      .post(`http://localhost:3001/shop/addItem/${authState.id}`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
       .then((res) => {
@@ -400,6 +400,7 @@ const PostAnAdForm = (props) => {
               select
               label='Category'
               value={category}
+              initialValues={formik.initialValues}
               onChange={handleCategoryChange}
               helperText={formik.touched.category && formik.errors.category}
               variant='filled'

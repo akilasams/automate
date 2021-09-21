@@ -3,16 +3,35 @@
   /* display: flex;
   flex-flow: column;
   align-items: center; */
-  width: 100vw;
+  min-width: 1490px;
+  width: 1490px;
+}
+
+.cartContainer {
+  padding: 20px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  min-width: 1490px;
+  width: 1490px;
+  height: 100vh;
 }
 
 .itemContainer {
   padding: 30px;
   /* height: 100vh; */
   overflow-y: scroll;
+  /* max-width: 100vh; */
 }
 
 .searchBarContainer {
   padding-left: 360px;
   width: 50%;
+}
+
+.checkout {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  margin-top: 30px;
 }

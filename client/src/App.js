@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Layout from './shared/components/UIElements/Layout';
 import Home from './pages/user/Home';
 import About from './pages/user/About';
+import PaymentSuccesful from './pages/user/PaymentSuccesful';
 import ContactUs from './pages/user/ContactUs';
 import Blog from './pages/user/Blog';
 import Shop from './pages/user/Shop';
@@ -22,7 +23,10 @@ import SelectQ from './pages/user/components/SelectQ';
 import PostAnAdForm from './pages/user/components/PostAnAdForm';
 import PaymentForm from './pages/user/components/PaymentForm';
 import SignUpAdmin from './pages/user/components/SignUpAdmin';
+<<<<<<< HEAD
 import Profile from './pages/user/Profile';
+=======
+>>>>>>> map display done
 
 const theme = createTheme({
   palette: {
@@ -36,8 +40,13 @@ const theme = createTheme({
 });
 
 function App() {
-  const [authState, setAuthState] = useState(false);
-  const [user, setUser] = useState({ firstName: '', id: '', userRole: '' });
+  const [authState, setAuthState] = useState({
+    firstName: '',
+    id: '',
+    userRole: '',
+    status: false,
+  });
+  // const [user, setUser] = useState({ firstName: '', id: '', userRole: '' });
 
   useEffect(() => {
     axios
@@ -48,21 +57,28 @@ function App() {
       })
       .then((response) => {
         if (response.data.error) {
-          setAuthState(false);
+          setAuthState({ ...authState, status: false });
         } else {
-          setAuthState(true);
-          setUser({
+          setAuthState({
             firstName: response.data.firstName,
             id: response.data.id,
             userRole: response.data.userRole,
+            status: true,
           });
         }
       });
+<<<<<<< HEAD
+=======
+  };
+
+  useEffect(() => {
+    fetchUser();
+>>>>>>> map display done
   }, []);
 
   return (
     <ThemeProvider theme={theme}>
-      <AuthContext.Provider value={{ authState, setAuthState, user, setUser }}>
+      <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
           <Switch>
             <Layout>
@@ -71,8 +87,8 @@ function App() {
               <Route path='/ContactUs' component={ContactUs} />
               <Route path='/Blog' component={Blog} />
               <Route path='/Shop' component={Shop} />
-              <Route path = '/SignUpAdmin' component={SignUpAdmin} />
-              <Route path='/Payment' component={Payment} />
+              <Route path='/SignUpAdmin' component={SignUpAdmin} />
+              <Route path='/Payment' component={PaymentForm} />
               <Route path='/Cart' component={Cart} />
               <Route path='/Cartform' component={Cartform} />
               <Route path='/SelectQ' component={SelectQ} />
@@ -83,6 +99,7 @@ function App() {
               <Route path='/SignUpIndi' component={AuthForm} />
               <Route path='/BeforeSignUp' component={AuthForm} />
               <Route path='/PaymentForm' component={PaymentForm} />
+              <Route path='/PaymentSuccess' component={PaymentSuccesful} />
               <Route exact path='/Admin' component={Dashboard} />
               <Route path='/Admin/Customers' component={Customers} />
               <Route path='/Admin/Advertisements' component={Advertisements} />

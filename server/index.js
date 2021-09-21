@@ -19,6 +19,8 @@ const AdsRouter = require('./routes/ShopItems');
 app.use('/ads', AdsRouter);
 const CartRouter = require('./routes/Carts');
 app.use('/cart', CartRouter);
+const PaymentRouter = require('./routes/Payments');
+app.use('/payments', PaymentRouter);
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
 db.sequelize.sync().then(() => {

@@ -25,7 +25,7 @@ const initialValues = {
 function LoginForm() {
   const classes = useStyle();
 
-  const { setAuthState, setUser, user } = useContext(AuthContext);
+  const { authState, setAuthState } = useContext(AuthContext);
 
   let history = useHistory();
 
@@ -36,8 +36,13 @@ function LoginForm() {
         alert(response.data.error);
       } else {
         localStorage.setItem('accessToken', response.data);
-        setAuthState(true);
-        if (user.userRole == 'Admin') {
+        setAuthState({
+          firstName: response.data.firstName,
+          id: response.data.id,
+          userRole: response.data.userRole,
+          status: true,
+        });
+        if (authState.userRole == 'Admin') {
           history.push('/Admin');
         } else {
           history.push('/');
