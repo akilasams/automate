@@ -17,6 +17,18 @@
   text-align: center;
   margin-bottom: 1rem;
 }
+.file-upload__preview {
+  width: 250px;
+  max-width: 250px;
+  height: 100px;
+  /* height: 10rem; */
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1rem;
+}
 
 .image-upload__preview img {
   width: 100%;
