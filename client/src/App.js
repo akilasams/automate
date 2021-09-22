@@ -81,7 +81,6 @@ function App() {
               <Route path='/ContactUs' component={ContactUs} />
               <Route path='/Blog' component={Blog} />
               <Route path='/Shop' component={Shop} />
-              <Route path='/SignUpAdmin' component={SignUpAdmin} />
               <Route path='/Payment' component={PaymentForm} />
               <Route path='/Cart' component={Cart} />
               <Route path='/Cartform' component={Cartform} />
@@ -91,6 +90,7 @@ function App() {
               <Route path='/Login' component={AuthForm} />
               <Route path='/SignUpShop' component={AuthForm} />
               <Route path='/SignUpIndi' component={AuthForm} />
+              <Route path='/SignUpAdmin' component={AuthForm} />
               <Route path='/BeforeSignUp' component={AuthForm} />
               <Route path='/PaymentForm' component={PaymentForm} />
               <Route path='/PaymentSuccess' component={PaymentSuccesful} />

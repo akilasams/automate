@@ -22,6 +22,7 @@ app.use('/cart', CartRouter);
 const PaymentRouter = require('./routes/Payments');
 app.use('/payments', PaymentRouter);
 app.use('/uploads/images', express.static(path.join('uploads', 'images')));
+app.use('/uploads/pdf', express.static(path.join('uploads', 'pdf')));
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {

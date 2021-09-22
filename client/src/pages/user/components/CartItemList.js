@@ -1,12 +1,8 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-<<<<<<< HEAD
 import axios from 'axios';
-import { useContext } from 'react';
-=======
 import { useContext, useCallback } from 'react';
->>>>>>> map display done
 import { AuthContext } from '../../../helpers/AuthContext';
 
 import CartItem from './CartItem';
@@ -21,19 +17,6 @@ const CartItemList = (props) => {
   const [cartItems, setCartItems] = useState([]);
   const { authState } = useContext(AuthContext);
 
-<<<<<<< HEAD
-  useEffect(() => {
-    axios
-      .get(`http://localhost:3001/cart/getItems/${user.id}`)
-      .then((res) => {
-        console.log(res.data);
-        setCartItems(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-=======
   const fetchCartItems = async () => {
     const response = await fetch(
       `http://localhost:3001/cart/getItems/${authState.id}`
@@ -57,7 +40,6 @@ const CartItemList = (props) => {
   //       console.log(err);
   //     });
   // }, []);
->>>>>>> map display done
 
   props.onChange(cartItems);
 

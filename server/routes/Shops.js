@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const { ShopItems, Shops, Orders, OrderItems } = require('../models');
-const fileUpload = require('../middlewares/UploadMiddleware');
+const imageUpload = require('../middlewares/ImageUploadMiddleware');
 // import { validateToken } from '../middlewares/AuthMiddleware';
 
 router.post(
   '/addItem/:userId',
-  fileUpload.single('image'),
+  imageUpload.single('image'),
   async (req, res) => {
     const {
       itemName,
