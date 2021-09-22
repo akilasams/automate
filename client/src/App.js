@@ -23,10 +23,7 @@ import SelectQ from './pages/user/components/SelectQ';
 import PostAnAdForm from './pages/user/components/PostAnAdForm';
 import PaymentForm from './pages/user/components/PaymentForm';
 import SignUpAdmin from './pages/user/components/SignUpAdmin';
-<<<<<<< HEAD
 import Profile from './pages/user/Profile';
-=======
->>>>>>> map display done
 
 const theme = createTheme({
   palette: {
@@ -48,7 +45,7 @@ function App() {
   });
   // const [user, setUser] = useState({ firstName: '', id: '', userRole: '' });
 
-  useEffect(() => {
+  const fetchUser = async () => {
     axios
       .get('http://localhost:3001/user/auth', {
         headers: {
@@ -67,13 +64,10 @@ function App() {
           });
         }
       });
-<<<<<<< HEAD
-=======
   };
 
   useEffect(() => {
     fetchUser();
->>>>>>> map display done
   }, []);
 
   return (

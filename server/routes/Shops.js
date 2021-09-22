@@ -44,30 +44,21 @@ router.post(
   }
 );
 
-<<<<<<< HEAD
-router.put(
-  '/approveItem/:itemId',
-  async (req, res) => {
+router.put('/approveItem/:itemId', async (req, res) => {
+  const itemId = req.params.itemId;
+  console.log('item Id: ', itemId);
+  const prevItem = await ShopItems.findByPk(itemId);
 
-    const itemId = req.params.itemId;
-    console.log("item Id: ", itemId)
-    const prevItem = await ShopItems.findByPk(itemId);
+  const updatedItem = await ShopItems.update(
+    { approval: true },
+    { where: { id: prevItem.dataValues.id } }
+  );
 
-    const updatedItem = await ShopItems.update(
-      { approval: true },
-      { where: { id: (prevItem.dataValues.id) } }
-    )
+  res.json(updatedItem);
+});
 
-    res.json(updatedItem);
-  }
-);
-
-router.post('/placeOrder', async (req, res) => {
-  const { itemId, userId } = req.body;
-=======
 router.post('/buyNow', async (req, res) => {
   const { itemId, userId, quantity, unitPrice } = req.body;
->>>>>>> map display done
 
   const newOrder = await Orders.create({
     amount: unitPrice,
@@ -101,22 +92,20 @@ router.post('/placeOrder', async (req, res) => {
 
   res.json(newOrder);
 });
-router.put(
-  '/approveShop/:shopId',
-  async (req, res) => {
-    console.log("test shop approval")
-    const shopId = req.params.shopId;
-    // console.log("shop Id: ", shopId)
-    const prevShop = await Shops.findByPk(shopId);
-    // console.log(prevShop)
-    const updatedShop = await Shops.update(
-      { regApproval: true },
-      { where: { id: (prevShop.dataValues.id) } }
-    )
-    console.log("updatedShop", updatedShop)
-    res.json(updatedShop);
-  }
-);
+
+router.put('/approveShop/:shopId', async (req, res) => {
+  console.log('test shop approval');
+  const shopId = req.params.shopId;
+  // console.log("shop Id: ", shopId)
+  const prevShop = await Shops.findByPk(shopId);
+  // console.log(prevShop)
+  const updatedShop = await Shops.update(
+    { regApproval: true },
+    { where: { id: prevShop.dataValues.id } }
+  );
+  console.log('updatedShop', updatedShop);
+  res.json(updatedShop);
+});
 router.get('/getShops', async (req, res) => {
   const shops = await Shops.findAll();
   res.json(shops);
@@ -130,8 +119,8 @@ router.get('/getItems', async (req, res) => {
 router.get('/getShopItems', async (req, res) => {
   const items = await ShopItems.findAll({
     where: {
-      approval: true
-    }
+      approval: true,
+    },
   });
   res.json(items);
 });
