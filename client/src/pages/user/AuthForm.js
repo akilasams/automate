@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import LoginForm from './components/LoginForm';
-
+import SignUpAdmin from './components/SignUpAdmin';
 import SignUpFormShop from './components/SignUpFormShop';
 import SignUpFormIndi from './components/SignUpFormIndi';
 import BeforeSignUp from './components/BeforeSignUp';
@@ -23,7 +23,7 @@ function AuthForm() {
   let beforeSignUp = location.pathname.match('/BeforeSignUp');
   let signUpShop = location.pathname.match('/SignUpShop');
   let signUpIndi = location.pathname.match('/SignUpIndi');
-
+  let signUpAdmin = location.pathname.match('/SignUpAdmin');
 
   return (
     <div className={classes.root}>
@@ -33,8 +33,8 @@ function AuthForm() {
       {login && <LoginForm />}
       {signUpShop && <SignUpFormShop />}
       {signUpIndi && <SignUpFormIndi />}
+      {signUpAdmin && <SignUpAdmin />}
       {beforeSignUp && <BeforeSignUp />}
-      
     </div>
   );
 }

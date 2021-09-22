@@ -229,7 +229,7 @@ function SignUpFormShop(props) {
           id='serviceType'
           name='serviceType'
           select
-          // initialValues={formik.initialValues}
+          initialValues={formik.initialValues}
           label='Service Type'
           value={serviceType}
           onChange={handleServiceTypeChange}

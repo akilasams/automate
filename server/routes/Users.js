@@ -4,7 +4,7 @@ const { Users, Shops, Carts, Contacts } = require('../models');
 const bcrypt = require('bcrypt');
 const { sign } = require('jsonwebtoken');
 const { validateToken } = require('../middlewares/AuthMiddleware');
-const pdfUpload = require('../middlewares/UploadMiddleware');
+const fileUpload = require('../middlewares/FileUploadMiddleware');
 
 router.post('/regCustomer', async (req, res) => {
   const { firstName, lastName, mobileNumber, address, email, password } =
@@ -46,50 +46,45 @@ router.post('/regAdmin', async (req, res) => {
   });
 });
 
-router.post('/regShop', pdfUpload.single('file'),
-  async (req, res) => {
+router.post('/regShop', fileUpload.single('file'), async (req, res) => {
+  const {
+    firstName,
+    lastName,
+    mobileNumber,
+    address,
+    email,
+    password,
+    serviceType,
+    shopName,
+  } = req.body;
 
-    const {
-      firstName,
-      lastName,
-      mobileNumber,
-      address,
-      email,
-      password,
-      serviceType,
-      shopName,
-    } = req.body;
+  const filePath = req.file.path;
 
-    const filePath = req.file.path;
-
-    await bcrypt.hash(password, 10).then((hash) => {
-      Users.create({
-        firstName: firstName,
-        lastName: lastName,
-        mobileNumber: mobileNumber,
-        userRole: 'Shop',
-        address: address,
-        email: email,
-        password: hash,
-      }).then((user) => {
-        Shops.create({
-          shopName: shopName,
-          serviceType: serviceType,
-          userId: user.id,
-          file: filePath,
-          regApproval: false,
-
-        });
-        Contacts.create({
-          userId: user.id,
-        });
+  await bcrypt.hash(password, 10).then((hash) => {
+    Users.create({
+      firstName: firstName,
+      lastName: lastName,
+      mobileNumber: mobileNumber,
+      userRole: 'Shop',
+      address: address,
+      email: email,
+      password: hash,
+    }).then((user) => {
+      Shops.create({
+        shopName: shopName,
+        serviceType: serviceType,
+        userId: user.id,
+        file: filePath,
+        regApproval: false,
+      });
+      Contacts.create({
+        userId: user.id,
       });
     });
-
-    res.json('Success');
   });
 
-
+  res.json('Success');
+});
 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -99,9 +94,9 @@ router.post('/login', async (req, res) => {
 
   const shop = await Shops.findOne({
     where: {
-      userId: user.id
-    }
-  })
+      userId: user.id,
+    },
+  });
 
   // if (shop.regApproval === false) {
   //   res.json({ error: "Shop registration not approved" });

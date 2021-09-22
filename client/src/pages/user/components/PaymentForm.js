@@ -1,25 +1,28 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { TextField } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { MenuItem } from '@material-ui/core';
 import { shopItemRegisterSchema } from '../../../validations/ShopValidation';
 import axios from 'axios';
 import { useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
-import Modal from '../../../shared/components/UIElements/Modal';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 
 import '../../../shared/components/FormElements/FileUpload.css';
 
 const useStyle = makeStyles({
   field: {
-    margin: 7,
+    margin: 5,
     width: '300px',
+    height: '15px',
+    padding: '5px',
+  },
+  label: {
+    width: '130px',
   },
   formPage: {
     display: 'flex',
@@ -52,6 +55,9 @@ const useStyle = makeStyles({
     alignItems: 'center',
     width: '100%',
   },
+  formControl: {
+    display: 'flex',
+  },
   goToHomeButton: {
     marginLeft: 5,
     marginRight: '15px',
@@ -74,62 +80,27 @@ const initialValues = {
 };
 
 const PaymentForm = (props) => {
-  const [category, setCategory] = useState('Accessories');
-  const [condition, setCondition] = useState('Brand New');
-  const { user } = useContext(AuthContext);
-
-  const [image, setImage] = useState();
-  const [previewUrl, setPreviewUrl] = useState();
-
-  const filePickerRef = useRef();
-
+  const { authState } = useContext(AuthContext);
+  const params = useParams();
   const [showMessage, setShowMessage] = useState(false);
+  const location = useLocation();
+  const [userDetails, setUserDetails] = useState({});
+  const [city, setCity] = useState('');
 
   const openMessageHandler = () => setShowMessage(true);
   const closeMessageHandler = () => setShowMessage(false);
 
+  const { order } = props;
+  // console.log(order);
+
   const classes = useStyle();
 
-  const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-  };
-
-  const handleConditionChange = (event) => {
-    setCondition(event.target.value);
-  };
-
-  const handleImageChange = (event) => {
-    setImage(event.target.files[0]);
-    formik.setFieldValue('image', event.target.files[0]);
+  const handleCityChange = (e) => {
+    setCity(e.target.value);
   };
 
   const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append('itemName', data.itemName);
-    formData.append('unitPrice', data.unitPrice);
-    formData.append('modelNo', data.modelNo);
-    formData.append('quantity', data.quantity);
-    formData.append('condition', data.condition);
-    formData.append('description', data.description);
-    formData.append('category', data.category);
-    formData.append('year', data.year);
-    formData.append('country', data.country);
-    formData.append('image', data.image);
-    for (var value of formData.values()) {
-      console.log(value);
-    }
-    // axios
-    //   .post(`http://localhost:3001/shop/addItem/${user.id}`, formData, {
-    //     headers: { 'Content-Type': 'multipart/form-data' },
-    //   })
-    //   .then((res) => {
-    //     console.log(res.data);
-    //     setShowMessage(true);
-    //     openMessageHandler();
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axios.post('https://sandbox.payhere.lk/pay/checkout', data);
   };
 
   const formik = useFormik({
@@ -138,22 +109,35 @@ const PaymentForm = (props) => {
     onSubmit,
   });
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3001/user/byId/${authState.id}`)
+      .then((res) => {
+        // console.log(res.data);
+        setUserDetails(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [authState]);
+
   return (
     <div className={classes.formPage}>
-      <h1>Enter Payment Details</h1>
+      <h1>Order Details</h1>
       <form
         className={classes.modalForm}
         onSubmit={formik.handleSubmit}
-        encType='multipart/form-data'
+        method='post'
+        action='https://sandbox.payhere.lk/pay/checkout'
       >
         {/* <div className={classes.formRow}> */}
         <div className={classes.formColumn}>
           <div className={classes.formColumnIn}>
-            <input type='hidden' name='1216946' value='121XXXX' />
+            <input type='hidden' name='merchant_id' value='1218673' />
             <input
               type='hidden'
               name='return_url'
-              value='http://sample.com/return'
+              value='http://localhost:3001/PaymentSuccess'
             />
             <input
               type='hidden'
@@ -165,126 +149,102 @@ const PaymentForm = (props) => {
               name='notify_url'
               value='http://sample.com/notify'
             />
-            <input type='text' name='order_id' value='ItemNo12345' />
-            <input type='text' name='items' value='Door bell wireless' />
-            <input type='hidden' name='currency' value='LKR' />
-            <input type='text' name='amount' value='1000' />
-            <input type='text' name='first_name' value='Saman' />
-            <input type='text' name='last_name' value='Perera' />
-            <input type='text' name='email' value='samanp@gmail.com' />
-            <input type='text' name='phone' value='0771234567' />
-            <input type='text' name='address' value='No.1, Galle Road' />
-            <input type='text' name='city' value='Colombo' />
-            <input type='hidden' name='country' value='Sri Lanka' />
-            <TextField
-              className={classes.field}
-              id='itemName'
-              label='Item Name'
-              name='itemName'
-              variant='filled'
-              onChange={formik.handleChange}
-              error={formik.touched.itemName && Boolean(formik.errors.itemName)}
-              helperText={formik.touched.itemName && formik.errors.itemName}
-            />
-            <TextField
-              className={classes.field}
-              id='unitPrice'
-              label='Unit Price'
-              name='unitPrice'
-              variant='filled'
-              onChange={formik.handleChange}
-              error={
-                formik.touched.unitPrice && Boolean(formik.errors.unitPrice)
-              }
-              helperText={formik.touched.unitPrice && formik.errors.unitPrice}
-            />
-            <TextField
-              className={classes.field}
-              id='modelNo'
-              label='Model Number'
-              name='modelNo'
-              variant='filled'
-              onChange={formik.handleChange}
-              error={formik.touched.modelNo && Boolean(formik.errors.modelNo)}
-              helperText={formik.touched.modelNo && formik.errors.modelNo}
-            />
-            <TextField
-              className={classes.field}
-              id='quantity'
-              label='Quantity'
-              name='quantity'
-              variant='filled'
-              onChange={formik.handleChange}
-              error={formik.touched.quantity && Boolean(formik.errors.quantity)}
-              helperText={formik.touched.quantity && formik.errors.quantity}
-            />
-            <TextField
-              className={classes.field}
-              id='description'
-              label='Description'
-              name='description'
-              variant='filled'
-              onChange={formik.handleChange}
-              error={
-                formik.touched.description && Boolean(formik.errors.description)
-              }
-              helperText={
-                formik.touched.description && formik.errors.description
-              }
-            />
-          </div>
-          <div className={classes.formColumnIn}>
-            <TextField
-              className={classes.field}
-              id='year'
-              label='Year'
-              name='year'
-              variant='filled'
-              onChange={formik.handleChange}
-              error={formik.touched.year && Boolean(formik.errors.year)}
-              helperText={formik.touched.year && formik.errors.year}
-            />
-            <TextField
-              className={classes.field}
-              id='country'
-              label='Country'
-              name='country'
-              variant='filled'
-              onChange={formik.handleChange}
-              error={formik.touched.country && Boolean(formik.errors.country)}
-              helperText={formik.touched.country && formik.errors.country}
-            />
+            <div className={classes.formControl}>
+              <label className={classes.label}>Order Id : </label>
+              <input
+                type='text'
+                className={classes.field}
+                name='order_id'
+                value={order.id}
+              />
+            </div>
+            <div className={classes.formControl}>
+              {/* <label className={classes.label}>Items : </label> */}
+              <input
+                type='hidden'
+                className={classes.field}
+                name='items'
+                value='ItemsList'
+              />
+            </div>
             <input
-              // accept='image/*'
-              ref={filePickerRef}
-              name='image'
-              className={classes.input}
-              id='contained-button-file'
-              // multiple
-              onChange={handleImageChange}
-              type='file'
+              type='hidden'
+              className={classes.field}
+              name='currency'
+              value='LKR'
             />
-            <label htmlFor='contained-button-file'>
-              <div className='image-upload center'>
-                <div className='image-upload__preview'>
-                  {previewUrl && <img src={previewUrl} alt='Preview' />}
-                  {!previewUrl && <p>Please Pick an Image</p>}
-                </div>
-                <Button
-                  startIcon={<CloudUploadIcon />}
-                  className={classes.inputButton}
-                  // onClick={uploadHandler}
-                  variant='outlined'
-                  color='primary'
-                  component='span'
-                >
-                  Upload Photos
-                </Button>
-              </div>
-            </label>
+            <div className={classes.formControl}>
+              <label className={classes.label}>Amount : </label>
+              <input
+                type='text'
+                className={classes.field}
+                name='amount'
+                value={order.amount}
+                readonly
+              />
+            </div>
+            <div className={classes.formControl}>
+              <label className={classes.label}>First Name : </label>
+              <input
+                type='text'
+                className={classes.field}
+                name='firstName'
+                value={userDetails.firstName}
+                readonly
+              />
+            </div>
+            <div className={classes.formControl}>
+              <label className={classes.label}>Last Name : </label>
+              <input
+                type='text'
+                className={classes.field}
+                name='lastName'
+                value={userDetails.lastName}
+                readonly
+              />
+            </div>
+            <div className={classes.formControl}>
+              <label className={classes.label}>Email : </label>
+              <input
+                type='text'
+                className={classes.field}
+                name='email'
+                value={userDetails.email}
+              />
+            </div>
+            <div className={classes.formControl}>
+              <label className={classes.label}>Mobile Number : </label>
+              <input
+                type='text'
+                className={classes.field}
+                name='mobileNo'
+                value={userDetails.mobileNumber}
+              />
+            </div>
+            <div className={classes.formControl}>
+              <label className={classes.label}>Address : </label>
+              <input
+                type='text'
+                className={classes.field}
+                name='address'
+                value={userDetails.address}
+              />
+            </div>
+            <div className={classes.formControl}>
+              <label className={classes.label}>City : </label>
+              <input
+                type='text'
+                className={classes.field}
+                name='city'
+                onChange={handleCityChange}
+                // value='Colombo'
+                placeholder='Enter Your City'
+              />
+            </div>
+            <input type='hidden' name='country' value='Sri Lanka' />
           </div>
         </div>
-        {/* <div className={classes.formRow}> */}
+        {/* <input type='submit' value='Confirm Payment' /> */}
         <Button
           color='primary'
           className={classes.button}
@@ -294,7 +254,6 @@ const PaymentForm = (props) => {
         >
           Confirm Payment
         </Button>
-        {/* </div> */}
       </form>
     </div>
   );

@@ -1,7 +1,12 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
 import { Link, useHistory } from 'react-router-dom';
-import { CardActions, IconButton, Typography } from '@material-ui/core';
+import {
+  CardActions,
+  IconButton,
+  responsiveFontSizes,
+  Typography,
+} from '@material-ui/core';
 import { CardHeader, CardMedia, CardContent } from '@material-ui/core';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
@@ -13,6 +18,7 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
+import PaymentForm from './PaymentForm';
 
 import './ShopItem.css';
 
@@ -43,13 +49,19 @@ const ShopItem = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { details } = props;
-  const { user } = useContext(AuthContext);
+  const { authState } = useContext(AuthContext);
 
   const [userDetails, setUserDetails] = useState({});
   const [shopDetails, setShopDetails] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [order, setOrder] = useState({});
 
   const [itemShow, setitemShow] = useState(false);
+
+  const [paymentConfirmShow, setpaymentConfirmShow] = useState(false);
+
+  const openPaymentConfirmHandler = () => setpaymentConfirmShow(true);
+  const closePaymentConfirmHandler = () => setpaymentConfirmShow(false);
 
   useEffect(() => {
     axios
@@ -89,14 +101,32 @@ const ShopItem = (props) => {
 
     if (quantity <= details.quantity) {
       axios
-        .post(`http://localhost:3001/cart/addToCart/${user.id}`, data)
+        .post(`http://localhost:3001/cart/addToCart/${authState.id}`, data)
         .then((res) => {
           console.log(res.data);
+          alert('Item Added to Cart');
         })
         .catch((err) => {
           console.log(err);
         });
     }
+  };
+
+  const buyNowHandler = () => {
+    closeItemShowHandler();
+    const data = {
+      userId: authState.id,
+      itemId: details.id,
+      quantity: quantity,
+      unitPrice: details.unitPrice,
+    };
+    console.log(data);
+
+    axios.post('http://localhost:3001/shop/buyNow', data).then((res) => {
+      console.log(res.data);
+      setOrder(res.data);
+      openPaymentConfirmHandler();
+    });
   };
 
   // const data = {
@@ -116,28 +146,59 @@ const ShopItem = (props) => {
   return (
     <>
       <Modal
+        show={paymentConfirmShow}
+        header='Done Buying?'
+        onCancel={closePaymentConfirmHandler}
+        // footer={
+        //   authState.status && (
+        //     <React.Fragment>
+        //       <Button
+        //         className={classes.postAdButton}
+        //         color='primary'
+        //         variant='contained'
+        //         onClick={checkoutHandler}
+        //       >
+        //         Yes, Confirm Order
+        //       </Button>
+        //       <Button
+        //         className={classes.postAdButton}
+        //         color='primary'
+        //         variant='contained'
+        //         onClick={closePaymentConfirmHandler}
+        //       >
+        //         No, Want to Explore More
+        //       </Button>
+        //     </React.Fragment>
+        //   )
+        // }
+      >
+        <PaymentForm order={order} />
+      </Modal>
+      <Modal
         show={itemShow}
         header={details.itemName}
         onCancel={closeItemShowHandler}
         footer={
-          <React.Fragment>
-            <Button
-              className={classes.postAdButton}
-              color='primary'
-              variant='contained'
-              onClick={closeItemShowHandler}
-            >
-              Buy Now
-            </Button>
-            <Button
-              className={classes.postAdButton}
-              color='primary'
-              variant='contained'
-              onClick={addtoCartHandler}
-            >
-              Add to Cart
-            </Button>
-          </React.Fragment>
+          authState.status && (
+            <React.Fragment>
+              <Button
+                className={classes.postAdButton}
+                color='primary'
+                variant='contained'
+                onClick={buyNowHandler}
+              >
+                Buy Now
+              </Button>
+              <Button
+                className={classes.postAdButton}
+                color='primary'
+                variant='contained'
+                onClick={addtoCartHandler}
+              >
+                Add to Cart
+              </Button>
+            </React.Fragment>
+          )
         }
       >
         {/* <div className='item-container'> */}
