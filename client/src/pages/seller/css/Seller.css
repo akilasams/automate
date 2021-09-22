@@ -1,6 +1,6 @@
 .ad {
   width: 500px;
-  height: 400px;
+  height: 430px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -34,11 +34,11 @@
 
 .ad .footer {
   flex: 20%;
-  border-top: 1px solid lightgray;
+
   display: flex;
-  align-items: center;
+  align-items: right;
   padding-left: 15px;
-  background-color: dodgerblue;
+  background-color: whitesmoke;
   color: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -46,13 +46,14 @@
 
 .user {
   width: 500px;
-  height: 500px;
+  height: 200px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   margin-top: 50px;
   border: 1px solid lightgray;
   font-family: Arial, Helvetica, sans-serif;
+
   margin-left: 70px;
 
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
@@ -62,7 +63,6 @@
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   cursor: pointer;
 }
-
 .user .title {
   flex: 20%;
   border-bottom: 1px solid lightgray;
@@ -88,8 +88,4 @@
   color: white;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-}
-.paper {
-  width: 500px;
-  height: 1000 px;
 }

@@ -33,7 +33,7 @@ function AuthForm() {
       {login && <LoginForm />}
       {signUpShop && <SignUpFormShop />}
       {signUpIndi && <SignUpFormIndi />}
-      {signUpAdmin && <SignUpAdmin />}
+      {/* {signUpAdmin && <SignUpAdmin />} */}
       {beforeSignUp && <BeforeSignUp />}
     </div>
   );

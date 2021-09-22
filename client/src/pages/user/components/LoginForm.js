@@ -5,7 +5,7 @@ import { Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
 import { userLoginSchema } from '../../../validations/UserValidation';
 import axios from 'axios';
-import { useHistory } from 'react-router';
+import { useHistory, Redirect } from 'react-router';
 import { useState, useContext } from 'react';
 import { AuthContext } from '../../../helpers/AuthContext';
 import { Link } from 'react-router-dom';
@@ -29,26 +29,29 @@ function LoginForm() {
 
   let history = useHistory();
 
-  const onSubmit = (data) => {
-    axios.post('http://localhost:3001/user/login', data).then((response) => {
-      // console.log(data);
-      if (response.data.error) {
-        alert(response.data.error);
-      } else {
-        localStorage.setItem('accessToken', response.data);
-        setAuthState({
-          firstName: response.data.firstName,
-          id: response.data.id,
-          userRole: response.data.userRole,
-          status: true,
-        });
-        if (authState.userRole == 'Admin') {
-          history.push('/Admin');
+  const onSubmit = async (data) => {
+    await axios
+      .post('http://localhost:3001/user/login', data)
+      .then((response) => {
+        // console.log(data);
+        if (response.data.error) {
+          alert(response.data.error);
         } else {
-          history.push('/');
+          localStorage.setItem('accessToken', response.data);
+          setAuthState({
+            firstName: response.data.firstName,
+            id: response.data.id,
+            userRole: response.data.userRole,
+            status: true,
+          });
+
+          if (authState.userRole === 'Admin') {
+            history.push('/Admin');
+          } else {
+            history.push('/');
+          }
         }
-      }
-    });
+      });
   };
 
   const formik = useFormik({
