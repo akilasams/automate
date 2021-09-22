@@ -111,6 +111,11 @@ router.get('/getShops', async (req, res) => {
   res.json(shops);
 });
 
+router.get('/getAds', async (req, res) => {
+  const countofAds = await ShopItems.count();
+  res.json(countofAds);
+});
+
 router.get('/getItems', async (req, res) => {
   const items = await ShopItems.findAll();
   res.json(items);

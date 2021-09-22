@@ -1,10 +1,15 @@
-import React, { useState, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import ReactDOM from 'react-dom';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
-import { AuthContext } from '../../../helpers/AuthContext';
-import { PostAdd, People, Storefront, Book } from '@material-ui/icons';
+import { Button } from '@material-ui/core';
+import {
+  PostAdd,
+  People,
+  Storefront,
+  Book,
+  EventNote,
+} from '@material-ui/icons';
 import { List } from '@material-ui/core';
 import { ListItem } from '@material-ui/core';
 import { ListItemIcon } from '@material-ui/core';
@@ -14,7 +19,8 @@ import { AppBar } from '@material-ui/core';
 import { Toolbar } from '@material-ui/core';
 import { Avatar } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core';
-import { Button } from '@material-ui/core';
+import React, { useContext } from 'react';
+import { AuthContext } from '../../../helpers/AuthContext';
 
 const drawerWidth = 220;
 
@@ -48,68 +54,45 @@ const useStyles = makeStyles((theme) => {
       marginLeft: 5,
       marginRight: '15px',
       height: '40px',
-      width: '120px',
+      width: '150px',
     },
   };
 });
 
-const AdminLeftNav = (props) => {
+const SellerLeftNav = (props) => {
   const classes = useStyles();
   const history = useHistory(); //To link ListItems
   const location = useLocation(); //To Track Current Page
-  const [anchorEl, setAnchorEl] = useState(null);
   const { authState, setAuthState } = useContext(AuthContext);
 
   const menuItems = [
-    // {
-    //   text: 'Dashboard',
-    //   icon: <DashboardIcon />,
-    //   path: '/Admin',
-    // },
     {
-      text: 'Customers',
-      icon: <People />,
-      path: '/Admin/Customers',
+      text: 'Dashboard',
+      icon: <DashboardIcon />,
+      path: '/Seller',
     },
     {
       text: 'Advertisements',
       icon: <PostAdd />,
-      path: '/Admin/Advertisements',
+      path: '/seller/SellerAds',
     },
-    {
-      text: 'Registrations',
-      icon: <Storefront />,
-      path: '/Admin/Registrations',
-    },
-    // {
-    //   text: 'Add Blog',
-    //   icon: <Book />,
-    //   path: '/Admin/AddBlog',
-    // },
   ];
-
-  const logout = () => {
-    setAnchorEl(null);
-    localStorage.removeItem('accessToken');
-    setAuthState(false);
-    history.push('/');
-  };
 
   return (
     <React.Fragment>
       <AppBar className={classes.appbar} elevation={0}>
         <Toolbar>
           <Typography className={classes.welcome}>
-            Welcome to Admin Dashboard
+            Welcome to Sellers Dashboard
           </Typography>
           <Button
             className={classes.postAdButton}
             // color='#ffffff'
             variant='outlined'
-            onClick={logout}
+            onClick={() => history.push('/')}
             disableElevation
           >
-            <Typography>Sign Out</Typography>
+            <Typography>Go to Home</Typography>
           </Button>
           <Typography>{authState.firstName}</Typography>
           <Avatar src='/images/guy.jpg' className={classes.avatar} />
@@ -155,4 +138,4 @@ const AdminLeftNav = (props) => {
   // );
 };
 
-export default AdminLeftNav;
+export default SellerLeftNav;

@@ -98,25 +98,41 @@ router.post('/login', async (req, res) => {
     },
   });
 
-  // if (shop.regApproval === false) {
+  // if (shop.regApproval === 0) {
   //   res.json({ error: "Shop registration not approved" });
   // }
+  if (
+    user.userRole !== 'Shop' ||
+    (user.userRole === 'Shop' && shop.regApproval == 1)
+  ) {
+    bcrypt.compare(password, user.password).then((match) => {
+      if (!match) res.json({ error: 'Wrong Username or Password' });
 
-  bcrypt.compare(password, user.password).then((match) => {
-    if (!match) res.json({ error: 'Wrong Username or Password' });
-
-    const accessToken = sign(
-      { firstName: user.firstName, id: user.id, userRole: user.userRole },
-      'secret'
-    );
-    res.json(accessToken);
-  });
+      const accessToken = sign(
+        { firstName: user.firstName, id: user.id, userRole: user.userRole },
+        'secret'
+      );
+      res.json(accessToken);
+    });
+  } else if (user.userRole === 'Shop' && shop.regApproval == 0) {
+    res.json({ error: 'Shop registration not approved' });
+  }
 });
 
 router.get('/byId/:userId', async (req, res) => {
   const userId = req.params.userId;
   const user = await Users.findOne({ where: { id: userId } });
   res.json(user);
+});
+
+router.get('/getCount', async (req, res) => {
+  const countofUsers = await Users.count();
+  res.json(countofUsers);
+});
+
+router.get('/getAllUsers', async (req, res) => {
+  const listofUsers = await Users.findAll();
+  res.json(listofUsers);
 });
 
 router.get('/auth', validateToken, (req, res) => {

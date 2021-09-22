@@ -23,7 +23,12 @@ import SelectQ from './pages/user/components/SelectQ';
 import PostAnAdForm from './pages/user/components/PostAnAdForm';
 import PaymentForm from './pages/user/components/PaymentForm';
 import SignUpAdmin from './pages/user/components/SignUpAdmin';
+import Title from './pages/seller/Title';
+import Chart from './pages/seller/Chart';
+import SellerDashboard from './pages/seller/SellerDashboard';
+import SellerAds from './pages/seller/SellerAds';
 import Profile from './pages/user/Profile';
+import { Redirect } from 'react-router';
 
 const theme = createTheme({
   palette: {
@@ -76,6 +81,7 @@ function App() {
         <Router>
           <Switch>
             <Layout>
+              {authState.userRole === 'Admin' ? <Redirect to='/Admin' /> : null}
               <Route exact path='/' component={Home} />
               <Route path='/About' component={About} />
               <Route path='/ContactUs' component={ContactUs} />
@@ -90,7 +96,7 @@ function App() {
               <Route path='/Login' component={AuthForm} />
               <Route path='/SignUpShop' component={AuthForm} />
               <Route path='/SignUpIndi' component={AuthForm} />
-              <Route path='/SignUpAdmin' component={AuthForm} />
+              <Route path='/SignUpAdmin' component={SignUpAdmin} />
               <Route path='/BeforeSignUp' component={AuthForm} />
               <Route path='/PaymentForm' component={PaymentForm} />
               <Route path='/PaymentSuccess' component={PaymentSuccesful} />
@@ -99,6 +105,10 @@ function App() {
               <Route path='/Admin/Advertisements' component={Advertisements} />
               <Route path='/Admin/Registrations' component={Registrations} />
               <Route path='/Admin/AddBlog' component={AddBlog} />
+              <Route exact path='/Seller' component={SellerDashboard} />
+              <Route path='/seller/Title' component={Title} />
+              <Route path='/seller/Chart' component={Chart} />
+              <Route path='/seller/SellerAds' />
             </Layout>
           </Switch>
         </Router>
